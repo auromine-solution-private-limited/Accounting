@@ -1,0 +1,264 @@
+@CHARSET "UTF-8";
+/******* GENERAL RESET *******/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody,
+ tfoot, thead, tr, th, td {
+border:0pt none;
+
+
+
+}
+
+html,body{
+	height:100%;
+	text-align: center;
+}
+.clear{
+	clear: both;
+	height: 0;
+	visibility: hidden;
+	display: block;
+}
+a{
+	text-decoration: none;
+}
+/******* GENERAL RESET *******/
+/******* LOGO *******/
+
+/******* /LOGO  *******/
+/******* MENU *******/
+/****************         reports styles            **************
+#container_tab{
+	
+	
+}
+#container_tab ul{
+	list-style: none;
+	margin:0pt;
+	padding:0pt;
+	list-style-position: outside;
+}
+#container_tab ul.menu li{
+	float: left;
+	margin-right: 5px;
+	margin-bottom: -1px;
+}
+#container_tab ul.menu li{
+	font-weight: 400;
+	width:100%;
+	display: block;
+	text-align:center;
+	padding: 2px 2px 2px 1px;
+	background: #efefef;
+	margin-bottom: -1px;
+	border: 1px solid #d0ccc9;
+	border-width: 1px 1px 1px 1px;
+	position: relative;
+	color: #898989;
+	cursor: pointer;
+}
+#container_tab ul.menu li.active{
+	background: #fff;
+	top: 1px;
+	border-bottom: 0;
+	color: #5f95ef;
+}*/
+/******* /MENU *******/
+/******* CONTENT *******/
+.content_tab{
+	width:650px;
+	margin:0pt;
+	padding:0pt;
+	padding-left:25px;
+	background: #efefef;
+	background: #fff;
+	border: 1px solid #d0ccc9;
+	text-align: left;
+
+	padding-bottom: 20px;
+	font-size: 11px;
+}
+.content_tab h1{
+	line-height: 1em;
+	margin:0pt;
+	padding:0pt;
+	vertical-align: middle;
+	height: 32px;
+	padding: 10px 30px 10px 50px;
+	font-size: 22px;
+}
+.content_tab ul{
+      padding-left:20px;
+	  margin:0pt;
+	padding:0pt;
+}
+.content_tab .tab_form{
+      padding-left:20px;
+	  margin:0pt;
+	padding:0pt;
+	  width:450px;
+}
+.content_tab h1{
+	background: transparent url(images/invoice.png) no-repeat scroll left top;
+}
+
+
+/******* /LINKS *******/
+
+
+
+
+/****************         accounts styles            ***************/
+#container_tab1{
+	
+	width: 150px;
+	float:left;
+	margin:0;
+	padding:0;
+}
+#container_tab1 ul{
+	list-style:none;
+	padding:0;
+	list-style-position:outside;
+}
+#container_tab1 ul.menu_acc li{
+	float:left;
+	width:131px;
+	
+}
+#container_tab1 ul.menu_acc li{
+	font-weight: 400;
+	display: block;
+	height:18px;
+	padding: 5px 10px 5px 10px;
+	background: #efefef;
+	margin-bottom: -1px;
+	border: 1px solid #d0ccc9;
+	border-width: 1px 1px 1px 1px;
+	position: relative;
+	color: #898989;
+	cursor: pointer;
+}
+#container_tab1 ul.menu_acc li.active{
+	background: #fff;
+	border-right: 2px #999999;
+	color: #5f95ef;
+}
+/******* /menu_acc *******/
+/******* CONTENT *******/
+.content_tab_ac{
+	width:590px;
+	height:463px;
+	float:left;
+	margin-top:12px;
+	background: #efefef;
+	background: #fff;
+	border: 1px solid #d0ccc9;
+	text-align: left;
+	font-size: 11px;
+}
+.content_tab_a{
+	width:590px;
+	height:463px;
+	float:left;
+	margin-top:12px;
+	background: #efefef;
+	background: #fff;
+	border: 1px solid #d0ccc9;
+	text-align: left;
+	font-size: 11px;
+}
+
+.content_tab_ac h2{
+	line-height: 1em;
+	vertical-align: middle;
+	padding: 10px 0px 0px 10px;
+	font-size: 18px;
+}
+.content_tab_a h2{
+	line-height: 1em;
+	vertical-align: middle;
+	padding: 10px 0px 0px 10px;
+	font-size: 18px;
+}
+.content_tab_ac ul{
+     
+}
+.content_tab_ac table .tab_form{
+      padding-left:20px;
+	  width:450px;
+}
+.content_tab_a table .tab_form{
+      padding-left:20px;
+	  width:450px;
+}
+
+
+	
+	
+/****************         Purchase menu styles            ***************/
+
+#container_tab_p{
+	border:0pt none;
+
+	vertical-align:baseline;
+	margin: auto;
+	width: 680px;
+}
+#container_tab_p ul{
+	list-style: none;
+	margin:0pt;
+	padding:0pt;
+	list-style-position: outside;
+}
+#container_tab_p ul.menu li{
+	float: left;
+	margin-right: 5px;
+	margin-bottom: -1px;
+}
+#container_tab_p ul.menu li{
+	font-weight: 400;
+	
+	display: block;
+	padding: 5px 10px 5px 10px;
+	background: #efefef;
+	margin-bottom: -1px;
+	border: 1px solid #d0ccc9;
+	border-width: 1px 1px 1px 1px;
+	position: relative;
+	color: #898989;
+	cursor: pointer;
+}
+#container_tab_p ul.menu li.active{
+	background: #fff;
+	top: 1px;
+	border-bottom: 0;
+	color: #5f95ef;
+}
+/******* /MENU *******/
+/******* CONTENT *******/
+.content_tab_p{
+		width:664px;
+	background: #efefef;
+	background: #fff;
+	border: 1px solid #d0ccc9;
+	text-align: left;
+
+	padding-bottom: 20px;
+	font-size: 11px;
+}
+.content_tab_p h1{
+	line-height: 1em;
+	vertical-align: middle;
+	height: 28px;
+	padding: 10px 30px 10px 50px;
+	font-size: 20px;
+}
+.content_tab_p ul{
+      padding-left:20px;
+}
+.content_tab_p .tab_form{
+      padding-left:20px;
+	  width:450px;
+}
+.boardrate tr td{vertical-align:middle;}
