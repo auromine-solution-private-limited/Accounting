@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd	
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+<tx:annotation-driven/>
+
+<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+
+<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	<property name="url" value="jdbc:mysql://localhost:3306/jewellery"/>
+	<property name="username" value="root"/>
+	<property name="password" value="admin"/>
+</bean>   
+
+<!-- Hibernate configuration -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+  <property name="dataSource" ref="dataSource"/>
+  <property name="annotatedClasses">
+	 <list>
+	 	<value>com.jewellery.entity.JewelType</value>
+	 	<value>com.jewellery.entity.Category</value>
+		<value>com.jewellery.entity.ItemMaster</value>
+		<value>com.jewellery.entity.Accounts</value>
+		<value>com.jewellery.entity.Ledger</value>
+		<value>com.jewellery.entity.SalesOrder</value>
+		<value>com.jewellery.entity.Sales</value>		
+		<value>com.jewellery.entity.Purchase</value>
+		<value>com.jewellery.entity.Journal</value>
+		<value>com.jewellery.entity.Transfer</value>		
+		<value>com.jewellery.entity.RateMaster</value>
+		<value>com.jewellery.entity.JobOrder</value>
+		<value>com.jewellery.entity.Userlogin</value>
+		<value>com.jewellery.entity.JewelFix</value>
+		<value>com.jewellery.entity.CompanyInfo</value>
+		<value>com.jewellery.entity.CompanyInfo</value>
+		<value>com.jewellery.entity.SavingScheme</value>
+		<value>com.jewellery.entity.StartScheme</value>
+		<value>com.jewellery.entity.CardIssue</value>
+		<value>com.jewellery.entity.Saving_SchemeReceipt</value>
+		<value>com.jewellery.entity.ProductInfo</value>
+		<value>com.jewellery.entity.POSCategory</value>
+		<value>com.jewellery.entity.POSItem</value>
+		<value>com.jewellery.entity.POSPurchase</value>
+		<value>com.jewellery.entity.POSPurchaseItem</value>
+		<value>com.jewellery.entity.LotStock</value> 
+		<value>com.jewellery.entity.PostagItem</value>
+		<value>com.jewellery.entity.POSSales</value>
+		<value>com.jewellery.entity.POSSalesItem</value>
+		<value>com.jewellery.entity.ManualBilling</value>
+		<value>com.jewellery.entity.ManBillRowList</value>
+		<value>com.jewellery.entity.ConfigSetting</value>
+		<value>com.jewellery.entity.ConfigDetailList</value>
+		<value>com.jewellery.entity.RefineryIssue</value>
+		<value>com.jewellery.entity.RefineryReceipt</value>
+		<value>com.jewellery.entity.JewelStock</value>
+		
+		<!-- <value>com.jewellery.entity.SalesBill</value>
+		<value>com.jewellery.entity.SalesItems</value>
+		<value>com.jewellery.entity.Payment</value> -->
+		
+	 </list>
+  </property>
+  <property name="hibernateProperties">
+	 <props>
+		<prop key="hibernate.connection.pool_size">10</prop>
+		<!-- prop key="hibernate.show_sql">true</prop  -->
+		<prop key="hibernate.format_sql">true</prop>
+		<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+		<prop key="hibernate.hbm2ddl.auto">update</prop>
+	</props>
+  </property>
+  	
+</bean>
+
+<!-- DAO configurations -->   
+<bean id="accountsDao" class="com.jewellery.dao.hibernate.HibernateAccountsDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="ledgerDao" class="com.jewellery.dao.hibernate.HibernateLedgerDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="salesorderDao" class="com.jewellery.dao.hibernate.HibernateSalesOrderDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="salesDao" class="com.jewellery.dao.hibernate.HibernateSalesDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="salesreturnDao" class="com.jewellery.dao.hibernate.HibernateSalesReturnDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="jeweltypeDao" class="com.jewellery.dao.hibernate.HibernateJewelTypeDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+
+<bean id="categoryDao" class="com.jewellery.dao.hibernate.HibernateCategoryDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="itemmasterDao" class="com.jewellery.dao.hibernate.HibernateItemMasterDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="purchaseDao" class="com.jewellery.dao.hibernate.HibernatePurchaseDaoImpl">
+<property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="journalDao" class="com.jewellery.dao.hibernate.HibernateJournalDaoImpl">
+<property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="transferDao" class="com.jewellery.dao.hibernate.HibernateTransferDaoImpl">
+<property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="jewelfixDao" class="com.jewellery.dao.hibernate.HibernateJewelFixDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="ratemasterDao" class="com.jewellery.dao.hibernate.HibernateRateMasterDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<!-- Transaction configuration    -->
+<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+  <property name="sessionFactory" ref="sessionFactory" />
+</bean>
+
+<bean id="joborderDao" class="com.jewellery.dao.hibernate.HibernateJobOrderDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="userloginDao" class="com.jewellery.dao.hibernate.HibernateUserloginDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="companyInfoDao" class="com.jewellery.dao.hibernate.HibernateCompanyInfoDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="productInfoDao" class="com.jewellery.dao.hibernate.HibernateProductInfoDaoImpl">
+<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+
+<bean id="poscategoryDao" class="com.jewellery.dao.hibernate.HibernatePOSCategoryDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="positemDao" class="com.jewellery.dao.hibernate.HibernatePOSItemDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="positemTagDao" class="com.jewellery.dao.hibernate.HibernatepostTagItemDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="lotstockDao" class="com.jewellery.dao.hibernate.HibernateLotStockDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="posPurchaseDao" class="com.jewellery.dao.hibernate.HibernatePOSPurchaseDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="POSSalesDao" class="com.jewellery.dao.hibernate.HibernatePOSSalesDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="SSReceiptDao" class="com.jewellery.dao.hibernate.HibernateSSReceiptDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="CardIssueDao" class="com.jewellery.dao.hibernate.HibernateCardIssueDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>	  
+</bean>
+
+<bean id="SavingSchemeDao" class="com.jewellery.dao.hibernate.HibernateSavingSchemeDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="StartSchemeDao" class="com.jewellery.dao.hibernate.HibernateStartSchemeDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="ManualBillingDao" class="com.jewellery.dao.hibernate.HibernateManualBillingDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="ConfigDao" class="com.jewellery.dao.hibernate.HibernateConfigDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="AppConfigDao" class="com.jewellery.dao.hibernate.HibernateAppConfigDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<bean id="RefineryDao" class="com.jewellery.dao.hibernate.HibernateRefineryDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<bean id="RefineryReceiptDao" class="com.jewellery.dao.hibernate.HibernateRefineryReceiptDaoDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<bean id="JewelStockDao" class="com.jewellery.dao.hibernate.HibernateJewelStockDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+<bean id="GenPrivateKeysDao" class="com.jewellery.dao.hibernate.HibernateGenPrivateKeysImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+
+<bean id="UtilMethodsDao" class="com.jewellery.dao.hibernate.HibernateUtilMethodsDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+
+</beans>
