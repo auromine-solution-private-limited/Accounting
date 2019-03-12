@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IndividualPartyLedger" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FromDateJournalDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LedgerName" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ToJournalDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Admin\\Desktop\\Report Files Compiled\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="debitSum" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
+	</parameter>
+	<parameter name="creditSum" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     companyinfo.`companyName` AS companyinfo_companyName,
+     companyinfo.`city` AS companyinfo_city,
+     companyinfo.`pincode` AS companyinfo_pincode,
+     companyinfo.`companyAddress` AS companyinfo_companyAddress,
+     companyinfo.`tinNumber` AS companyinfo_tinNumber,
+     DATE_FORMAT(journal.journalDate, "%d/%m/%Y") AS formattedJournlDate
+FROM
+     `journal` journal,
+     `companyinfo` companyinfo
+WHERE
+     (journalDate >= str_to_date($P{FromDateJournalDate},'%d/%m/%Y')
+ AND journalDate <= str_to_date($P{ToJournalDate},'%d/%m/%Y')) AND (journal.`debitAccountName` = $P{LedgerName} ||  journal.`creditAccountName` =$P{LedgerName})
+ORDER BY
+     journalType]]>
+	</queryString>
+	<field name="journalId" class="java.lang.Integer"/>
+	<field name="debitAmount" class="java.math.BigDecimal"/>
+	<field name="creditAmount" class="java.math.BigDecimal"/>
+	<field name="transactionId" class="java.lang.String"/>
+	<field name="journalNO" class="java.lang.String"/>
+	<field name="debitAccountName" class="java.lang.String"/>
+	<field name="creditAccountName" class="java.lang.String"/>
+	<field name="journalDate" class="java.sql.Timestamp"/>
+	<field name="journalType" class="java.lang.String"/>
+	<field name="narration" class="java.lang.String"/>
+	<field name="receiptType" class="java.lang.String"/>
+	<field name="debitCode" class="java.lang.String"/>
+	<field name="creditCode" class="java.lang.String"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="reference" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="tinNumber" class="java.lang.String"/>
+	<field name="CSTNumber" class="java.lang.String"/>
+	<field name="c_email" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="companyAddress" class="java.lang.String"/>
+	<field name="posBarcodePrint" class="java.lang.String"/>
+	<field name="posInvoicePrint" class="java.lang.String"/>
+	<field name="ornBarcodePrint" class="java.lang.String"/>
+	<field name="ornInvoicePrint" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<field name="companyinfo_companyName" class="java.lang.String"/>
+	<field name="companyinfo_city" class="java.lang.String"/>
+	<field name="companyinfo_pincode" class="java.lang.String"/>
+	<field name="companyinfo_companyAddress" class="java.lang.String"/>
+	<field name="companyinfo_tinNumber" class="java.lang.String"/>
+	<field name="formattedJournlDate" class="java.lang.String"/>
+	<variable name="sumDebitLedgers" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{debitAccountName}.equalsIgnoreCase( $P{LedgerName} )?$F{debitAmount}:0.00)]]></variableExpression>
+	</variable>
+	<variable name="sumCreditLedgers" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{creditAccountName}.equalsIgnoreCase( $P{LedgerName} )?$F{debitAmount}:0.00)]]></variableExpression>
+	</variable>
+	<variable name="sumOpBalDebitLegers" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{sumDebitLedgers}+$P{debitSum}]]></variableExpression>
+	</variable>
+	<variable name="somOpBalCreditLedgers" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{sumCreditLedgers}+$P{creditSum}]]></variableExpression>
+	</variable>
+	<variable name="CONVERT_CONSTANT" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[-1]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SubtractedClosing" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{sumOpBalDebitLegers}.subtract($V{somOpBalCreditLedgers} )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SummaryDebitamount" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[(($V{SubtractedClosing} < 0) ? ( $V{SubtractedClosing}.multiply( $V{CONVERT_CONSTANT} ) ) : $V{SubtractedClosing})]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SummaryCreditAmount" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[(($V{SubtractedClosing} < 0 )? ($V{SubtractedClosing}.multiply( $V{CONVERT_CONSTANT} )) : $V{SubtractedClosing})]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="2" width="277" height="35"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Individual A/C Ledgers Of]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="342" y="2" width="187" height="35"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LedgerName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="210" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyinfo_companyName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="20" width="436" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyinfo_companyAddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="48" y="40" width="114" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyinfo_pincode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="40" width="134" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyinfo_city}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="0" width="253" height="61" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{companyinfo_companyName}==null]]></printWhenExpression>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["CB_CompanyInfo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="135" y="5" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Particulars]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="6" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="329" y="5" width="76" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Debit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="5" width="101" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Credit]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="3" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="24" width="555" height="1"/>
+			</line>
+			<subreport>
+				<reportElement x="1" y="25" width="554" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="LedgerName">
+					<subreportParameterExpression><![CDATA[$P{LedgerName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FromDateJournalDate">
+					<subreportParameterExpression><![CDATA[$P{FromDateJournalDate}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["FromDateLedgerReport.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="0" y="46" width="555" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25">
+			<textField isBlankWhenNull="true">
+				<reportElement x="308" y="2" width="100" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{debitAccountName}.equalsIgnoreCase( $P{LedgerName} )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="2" width="110" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{creditAccountName}.equalsIgnoreCase( $P{LedgerName} )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="4" y="1" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="2" width="161" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="429" y="2" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="2" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="48">
+			<textField isBlankWhenNull="true">
+				<reportElement x="304" y="25" width="104" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[(($V{SummaryDebitamount} == 0) && ($V{SummaryCreditAmount} == 0) && ($P{debitSum} != 0 ))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{debitSum}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="437" y="25" width="110" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{SummaryDebitamount} == 0 && $V{SummaryCreditAmount} == 0 && $P{creditSum} !=0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{creditSum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="185" y="25" width="118" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[($V{SummaryDebitamount}==0 && $V{SummaryCreditAmount}==0) && ($P{debitSum}!=0 || $P{creditSum} !=0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Closing Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="3" width="118" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{SummaryDebitamount}!=0 || $V{SummaryCreditAmount}!=0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Closing Balance]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="308" y="3" width="100" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{sumOpBalDebitLegers}.compareTo( $V{somOpBalCreditLedgers} )!=-1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SummaryDebitamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="3" width="110" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{sumOpBalDebitLegers}.compareTo($V{somOpBalCreditLedgers})==-1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SummaryCreditAmount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="46" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="2" width="554" height="1"/>
+			</line>
+		</band>
+	</summary>
+	<noData>
+		<band height="36">
+			<staticText>
+				<reportElement x="52" y="0" width="454" height="36"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[The Given Ledger Contains no Data]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

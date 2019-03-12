@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DayWiseStockReportLotStock" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="00d484a8-9203-419d-8c51-c9fe0dc7ce8b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DayWiseStkFrmDate" class="java.util.Date"/>
+	<parameter name="DayWiseStkToDate" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     jewelstock.`jewel_StockId` AS jewelstock_jewel_StockId,
+     jewelstock.`stock_TransType` AS jewelstock_stock_TransType,
+     jewelstock.`stock_StockType` AS jewelstock_stock_StockType,
+     jewelstock.`stock_TransNO` AS jewelstock_stock_TransNO,
+     jewelstock.`stock_TransDate` AS jewelstock_stock_TransDate,
+     jewelstock.`stock_ItemCode` AS jewelstock_stock_ItemCode,
+     jewelstock.`stock_CategoryName` AS jewelstock_stock_CategoryName,
+     jewelstock.`stock_SubCategoryName` AS jewelstock_stock_SubCategoryName,
+     jewelstock.`stock_ItemName` AS jewelstock_stock_ItemName,
+     jewelstock.`stock_MetalUsed` AS jewelstock_stock_MetalUsed,
+     jewelstock.`stock_MetalType` AS jewelstock_stock_MetalType,
+     jewelstock.`stock_OPQty` AS jewelstock_stock_OPQty,
+     jewelstock.`stock_CLQty` AS jewelstock_stock_CLQty,
+     jewelstock.`stock_CLPieces` AS jewelstock_stock_CLPieces,
+     jewelstock.`stock_OPTotalPieces` AS jewelstock_stock_OPTotalPieces,
+     jewelstock.`stock_CLTotalPieces` AS jewelstock_stock_CLTotalPieces,
+     jewelstock.`stock_OPGrossWeight` AS jewelstock_stock_OPGrossWeight,
+     jewelstock.`stock_OPNetWeight` AS jewelstock_stock_OPNetWeight,
+     jewelstock.`stock_OPTotalGrossWeight` AS jewelstock_stock_OPTotalGrossWeight,
+     jewelstock.`stock_CLGrossWeight` AS jewelstock_stock_CLGrossWeight,
+     jewelstock.`stock_CLNetWeight` AS jewelstock_stock_CLNetWeight,
+     jewelstock.`stock_CLTotalGrossWeight` AS jewelstock_stock_CLTotalGrossWeight,
+     jewelstock.`stock_BullionRate` AS jewelstock_stock_BullionRate
+FROM
+     `jewelstock` jewelstock
+WHERE
+     (jewelstock.`stock_TransType`='LotStock' OR jewelstock.`stock_ItemCode` > 'IT100012')
+AND
+     (jewelstock.`stock_MetalUsed` != 'Gold Loose Stock' AND
+     jewelstock.`stock_MetalUsed` != 'Silver Loose Stock')
+
+ORDER BY
+ jewelstock.`stock_CategoryName` ASC, jewelstock.`stock_MetalType` ASC]]>
+	</queryString>
+	<field name="jewelstock_jewel_StockId" class="java.lang.Integer"/>
+	<field name="jewelstock_stock_TransType" class="java.lang.String"/>
+	<field name="jewelstock_stock_StockType" class="java.lang.String"/>
+	<field name="jewelstock_stock_TransNO" class="java.lang.String"/>
+	<field name="jewelstock_stock_TransDate" class="java.sql.Timestamp"/>
+	<field name="jewelstock_stock_ItemCode" class="java.lang.String"/>
+	<field name="jewelstock_stock_CategoryName" class="java.lang.String"/>
+	<field name="jewelstock_stock_SubCategoryName" class="java.lang.String"/>
+	<field name="jewelstock_stock_ItemName" class="java.lang.String"/>
+	<field name="jewelstock_stock_MetalUsed" class="java.lang.String"/>
+	<field name="jewelstock_stock_MetalType" class="java.lang.String"/>
+	<field name="jewelstock_stock_OPQty" class="java.lang.Integer"/>
+	<field name="jewelstock_stock_CLQty" class="java.lang.Integer"/>
+	<field name="jewelstock_stock_CLPieces" class="java.lang.Integer"/>
+	<field name="jewelstock_stock_OPTotalPieces" class="java.lang.Integer"/>
+	<field name="jewelstock_stock_CLTotalPieces" class="java.lang.Integer"/>
+	<field name="jewelstock_stock_OPGrossWeight" class="java.math.BigDecimal"/>
+	<field name="jewelstock_stock_OPNetWeight" class="java.math.BigDecimal"/>
+	<field name="jewelstock_stock_OPTotalGrossWeight" class="java.math.BigDecimal"/>
+	<field name="jewelstock_stock_CLGrossWeight" class="java.math.BigDecimal"/>
+	<field name="jewelstock_stock_CLNetWeight" class="java.math.BigDecimal"/>
+	<field name="jewelstock_stock_CLTotalGrossWeight" class="java.math.BigDecimal"/>
+	<field name="jewelstock_stock_BullionRate" class="java.math.BigDecimal"/>
+	<variable name="NegConsBDLS" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[BigDecimal.valueOf(-1)]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="OpeningPcsLS" class="java.lang.Integer" resetType="Group" resetGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLQty} : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "ItemMaster" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLQty} : 0
+)
++
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "Tag Issue" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? ($F{jewelstock_stock_CLQty} * -1) : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Return Lot Stock" )
+ ) ? ($F{jewelstock_stock_CLQty} * -1) : 0
+)]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="OpeningTotalPCsLS" class="java.lang.Integer" incrementType="Group" incrementGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[$V{OpeningPcsLS}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="OpeningGrossWt" class="java.math.BigDecimal" resetType="Group" resetGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLGrossWeight} : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "ItemMaster" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLGrossWeight} : 0
+)
++
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "Tag Issue" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLGrossWeight}.multiply($V{NegConsBDLS}) : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Return Lot Stock" )
+ ) ? $F{jewelstock_stock_CLGrossWeight}.multiply($V{NegConsBDLS}) : 0
+)]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="OpeningTotalGrossWt" class="java.math.BigDecimal" incrementType="Group" incrementGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[$V{OpeningGrossWt}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="PurchasePcs" class="java.lang.Integer" resetType="Group" resetGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLQty} : 0
+)]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="PurchaseTotalPcs" class="java.lang.Integer" incrementType="Group" incrementGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[$V{PurchasePcs}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="PurchaseGrossWeight" class="java.math.BigDecimal" resetType="Group" resetGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLGrossWeight} : 0
+)]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="PurchaseTotalGrossWeight" class="java.math.BigDecimal" incrementType="Group" incrementGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[$V{PurchaseGrossWeight}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="ClosingPcs" class="java.lang.Integer" resetType="Group" resetGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLQty} : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "ItemMaster" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLQty} : 0
+)
++
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "Tag Issue" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? ($F{jewelstock_stock_CLQty} * -1) : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Return Lot Stock" )
+ ) ? ($F{jewelstock_stock_CLQty} * -1) : 0
+)
+
+
++
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLQty} : 0
+)
+
+
+-
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "ItemMaster" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLQty} : 0
+)
++
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "Tag Issue" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? ($F{jewelstock_stock_CLQty} * -1) : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLQty}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Return Lot Stock" )
+ ) ? ($F{jewelstock_stock_CLQty} * -1) : 0
+)]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="ClosingTotPcs" class="java.lang.Integer" incrementType="Group" incrementGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[$V{ClosingPcs}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="ClosingGrosWt" class="java.math.BigDecimal" resetType="Group" resetGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLGrossWeight} : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "ItemMaster" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLGrossWeight} : 0
+)
++
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "Tag Issue" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLGrossWeight}.multiply($V{NegConsBDLS}) : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} < $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Return Lot Stock" )
+ ) ? $F{jewelstock_stock_CLGrossWeight}.multiply($V{NegConsBDLS}) : 0
+)
+
+
++
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Add Lot Stock" )
+ ) ? $F{jewelstock_stock_CLGrossWeight} : 0
+)
+
+
+
+-
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "ItemMaster" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLGrossWeight} : 0
+)
++
+(
+ ( $F{jewelstock_stock_CLGrossWeight}!=null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "Tag Issue" ) &&
+    ( $F{jewelstock_stock_StockType}.equalsIgnoreCase( "GoldLotStock" ) ||
+      $F{jewelstock_stock_StockType}.equalsIgnoreCase( "SilverLotStock" )
+    )
+ ) ? $F{jewelstock_stock_CLGrossWeight}.multiply($V{NegConsBDLS}) : 0
+)
+-
+(
+ ( $F{jewelstock_stock_CLGrossWeight} != null &&
+   $F{jewelstock_stock_TransDate} >=  $P{DayWiseStkFrmDate} &&
+   $F{jewelstock_stock_TransDate} <= $P{DayWiseStkToDate} &&
+   $F{jewelstock_stock_TransType}.equalsIgnoreCase( "LotStock" ) &&
+   $F{jewelstock_stock_StockType}.equalsIgnoreCase( "Return Lot Stock" )
+ ) ? $F{jewelstock_stock_CLGrossWeight}.multiply($V{NegConsBDLS}) : 0
+)]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="ClosingTotGrossWt" class="java.math.BigDecimal" incrementType="Group" incrementGroup="CategoryName" calculation="Sum">
+		<variableExpression><![CDATA[$V{ClosingGrosWt}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<group name="CategoryName">
+		<groupExpression><![CDATA[$F{jewelstock_stock_CategoryName}]]></groupExpression>
+		<groupFooter>
+			<band height="21">
+				<printWhenExpression><![CDATA[$V{OpeningPcsLS}!=0 || $V{OpeningGrossWt}!=0 ||
+$V{PurchasePcs}!=0 || $V{PurchaseGrossWeight}!=0 ||
+$V{ClosingPcs}!=0 || $V{ClosingGrosWt}!=0]]></printWhenExpression>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="a0c6b9bf-5c97-4365-848e-7b87db3896d9" x="3" y="4" width="141" height="15">
+						<printWhenExpression><![CDATA[$F{jewelstock_stock_CategoryName}!=null]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jewelstock_stock_CategoryName}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="3989731f-8adf-49be-92c4-b4ab2820bd69" x="144" y="4" width="33" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{OpeningPcsLS}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement uuid="368f26b8-3ea0-45fb-81ef-8562a90816c4" x="182" y="4" width="63" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{OpeningGrossWt}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="9fe36301-e560-4868-b4c8-ceebcaa36c01" x="252" y="3" width="33" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PurchasePcs}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement uuid="0874d07b-d289-46bd-bdac-0402d7b905e4" x="287" y="3" width="75" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PurchaseGrossWeight}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="a31b844d-cc1d-4143-908b-e12f35ac27b3" x="482" y="4" width="32" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ClosingPcs}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement uuid="81f59b3c-4aba-441d-a1b9-8b72cd8fbf6b" x="522" y="3" width="62" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ClosingGrosWt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2d642f07-32ab-4700-9dab-f2b987980c78" x="203" y="15" width="178" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Agency FB" size="15" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Day Wise Stock Report : LotStock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83ef020f-c116-45aa-90dd-fd9caff57f42" x="414" y="36" width="31" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="c27c08db-9873-4b13-bc54-95ccff7af179" x="525" y="36" width="60" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DayWiseStkToDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="954a6f99-ee44-47c4-ae04-e4e287f0f9b0" x="72" y="36" width="99" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="157cdd17-4ae9-4838-9017-cc8def910db5" x="1" y="36" width="71" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Generated On :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3c652de4-9d2e-4112-9fa1-06ac95c77aca" x="505" y="36" width="20" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[To :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="c6053b0f-25b5-414a-b879-23eb9bde5584" x="445" y="36" width="60" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DayWiseStkFrmDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="899c0ad3-796d-4323-8f7c-57c662e17d76" x="6" y="18" width="88" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Material Name]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="6a3f4e66-ef9a-4466-a6d0-598dec7ca5c3" x="0" y="1" width="585" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="06977aeb-cb1d-498e-aeaf-ee6a5bab1367" x="478" y="1" width="1" height="55"/>
+			</line>
+			<line>
+				<reportElement uuid="81e0d06f-5d4d-4d9e-a648-3466290b3bab" x="249" y="1" width="1" height="56"/>
+			</line>
+			<line>
+				<reportElement uuid="882a3122-9f5d-4d65-8a7b-4076f30923a2" x="139" y="2" width="1" height="55"/>
+			</line>
+			<line>
+				<reportElement uuid="c2098f34-99ed-4058-a7f6-9be1edc86763" x="585" y="1" width="1" height="56"/>
+			</line>
+			<line>
+				<reportElement uuid="d450f6c4-f9b1-4924-880a-60dbab0bfae0" x="0" y="1" width="1" height="56"/>
+			</line>
+			<line>
+				<reportElement uuid="c60e07cc-3016-4d13-8520-c9928e6e2e57" x="0" y="56" width="585" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c8f67d3e-1fcf-4ea8-a70c-4c364a7b2228" x="139" y="23" width="446" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="6dab62e3-09e3-4264-8662-4ed84fa5c15d" x="179" y="24" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement uuid="47965cb9-5f4a-4078-a9a9-36d59f7dc0c5" x="286" y="24" width="1" height="32"/>
+			</line>
+			<line>
+				<reportElement uuid="7238c2de-83c2-4596-b6fe-1a41defc83e1" x="364" y="0" width="1" height="56"/>
+			</line>
+			<line>
+				<reportElement uuid="31ddd94a-86f5-4279-9c07-2c42a37bc4b2" x="513" y="23" width="1" height="33"/>
+			</line>
+			<line>
+				<reportElement uuid="df0e9343-6380-4579-aa56-5e2cbc1e2e39" x="407" y="24" width="1" height="32"/>
+			</line>
+			<staticText>
+				<reportElement uuid="ac8decab-b5ac-4719-883e-22b5b3353cfc" x="154" y="5" width="68" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Opening Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72fb2966-3c80-4210-abb2-60fb6d01406f" x="268" y="5" width="71" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Purchase Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a8805dd-c43f-4440-8b3e-d19c910d7f70" x="492" y="5" width="76" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Closing Stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e83c45ac-a7ee-4618-bced-86a0cdbf7d19" x="142" y="33" width="33" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Pcs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0dd19ad6-612c-4ec6-8ac7-9428df5f3f63" x="181" y="33" width="63" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Gross Weight]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9cc75385-f7b0-42b8-97f8-f7ec7c3844a5" x="294" y="32" width="66" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Gross Weight]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eac92844-87a9-42be-9f1f-a2bad8a049c8" x="252" y="32" width="33" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Pcs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="675054c7-0957-4cb0-be4a-0e5347895bc3" x="413" y="33" width="62" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Gross Weight]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eb71a13d-940c-48f4-af2d-57d2f5e5e107" x="519" y="33" width="62" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Gross Weight]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="39bcae50-0ac3-4710-abee-2ee1a3897672" x="370" y="33" width="33" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Pcs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aadf66f3-532c-4cb4-9bd7-badbbe4a406a" x="483" y="33" width="26" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Pcs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="50dfd17b-aa47-445c-a1be-2ef689238d19" x="392" y="5" width="62" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Sales Stock]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="15">
+			<textField evaluationTime="Report">
+				<reportElement uuid="178b9612-b176-45e3-9931-6cfef9b3bbe8" x="545" y="0" width="40" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bd7713b3-556f-46ae-bd1b-58b9f758d740" x="465" y="0" width="80" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="20">
+			<rectangle>
+				<reportElement uuid="eb4feff5-31bc-4b8c-b0b3-47535b7d6ea7" x="0" y="0" width="585" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="d23fa377-8eed-4800-8e86-d1ec5aa96005" x="6" y="4" width="124" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Black" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sum : ]]></text>
+			</staticText>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement uuid="71a1fd21-5637-4467-9af8-66f9b5b79b3d" x="251" y="4" width="35" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PurchaseTotalPcs}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement uuid="bd6e6287-f72e-443d-a81d-4b4c421b78cb" x="287" y="4" width="75" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PurchaseTotalGrossWeight}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="56c32207-d907-4279-9996-10e162f1d6e3" x="145" y="3" width="33" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{OpeningTotalPCsLS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement uuid="3a67e87d-67c2-469b-99d5-080b0ca9475c" x="182" y="3" width="63" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{OpeningTotalGrossWt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement uuid="9b7ee6e5-8b07-4263-a9bb-6e5516529d13" x="522" y="3" width="62" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ClosingTotGrossWt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="66a9d4dc-80f6-4bce-b2ad-6fc3994723a9" x="485" y="4" width="29" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ClosingTotPcs}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="38">
+			<staticText>
+				<reportElement uuid="9bb16cec-d170-4e67-aeb2-2cd2a99f4d0e" x="0" y="0" width="555" height="38" forecolor="#333333"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No Record Found For Day Wise Stock Report Old Metals Section]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TrialBalance" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     ledger.`ledgerDate` AS ledger_ledgerDate,
+     ledger.`closingTotalBalance` AS ledger_closingTotalBalance,
+     companyinfo.`companyName` AS companyinfo_companyName,
+     companyinfo.`city` AS companyinfo_city,
+     companyinfo.`pincode` AS companyinfo_pincode,
+     companyinfo.`companyAddress` AS companyinfo_companyAddress,
+     ledger.`ledgerName` AS ledger_ledgerName,
+     ledger.`accountGroup` AS ledger_accountGroup,
+     ledger.`closingTotalType` AS ledger_closingTotalType
+FROM
+     `ledger` ledger,
+     `companyinfo` companyinfo]]>
+	</queryString>
+	<field name="ledger_ledgerDate" class="java.sql.Timestamp"/>
+	<field name="ledger_closingTotalBalance" class="java.math.BigDecimal"/>
+	<field name="companyinfo_companyName" class="java.lang.String"/>
+	<field name="companyinfo_city" class="java.lang.String"/>
+	<field name="companyinfo_pincode" class="java.lang.String"/>
+	<field name="companyinfo_companyAddress" class="java.lang.String"/>
+	<field name="ledger_ledgerName" class="java.lang.String"/>
+	<field name="ledger_accountGroup" class="java.lang.String"/>
+	<field name="ledger_closingTotalType" class="java.lang.String"/>
+	<variable name="Date" class="java.lang.String"/>
+	<variable name="sumDebitBalance" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{ledger_closingTotalType}=="Debit" ? $F{ledger_closingTotalBalance} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="sumCreditBalance" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{ledger_closingTotalType}=="Credit" ? $F{ledger_closingTotalBalance} : 0.00 )]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="107" y="3" width="215" height="40"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Trial Balance As On ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="326" y="3" width="160" height="40"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="210" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyinfo_companyName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="395" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyinfo_companyAddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="40" width="98" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyinfo_pincode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="40" width="134" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyinfo_city}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="16" y="5" width="100" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Particulars]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="5" width="44" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Debit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="5" width="100" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Credit]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="3" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="24" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="4" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="555" y="4" width="1" height="21"/>
+			</line>
+			<line>
+				<reportElement x="285" y="4" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="424" y="4" width="1" height="20"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="15" y="2" width="266" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledger_ledgerName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="295" y="2" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{ledger_closingTotalType}=="Debit"]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledger_closingTotalBalance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="445" y="2" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{ledger_closingTotalType}=="Credit"]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledger_closingTotalBalance}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="-2" width="1" height="24"/>
+			</line>
+			<line>
+				<reportElement x="555" y="-1" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement x="285" y="-2" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement x="424" y="-1" width="1" height="23"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="23" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="295" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumDebitBalance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="445" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumCreditBalance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="2" width="40" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="424" y="-1" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement x="555" y="-1" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement x="285" y="0" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="-1" width="1" height="23"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="429" y="3" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="3" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="33">
+			<staticText>
+				<reportElement x="132" y="0" width="283" height="33"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[The Report has No data]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

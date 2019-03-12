@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesRegister" language="groovy" pageWidth="700" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="srtodate" class="java.lang.String"/>
+	<parameter name="srfrmdate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select l.panNumber,s.customerName,s.* from jewellery.ledger
+l right outer join jewellery.sales s on l.ledgerName=s.customerName
+where salesdate >=str_to_date($P{srfrmdate},'%d/%m/%Y') AND salesdate<=str_to_date($P{srtodate},'%d/%m/%Y' )AND
+salesType='Estimate Sales']]>
+	</queryString>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="salesId" class="java.lang.Integer"/>
+	<field name="lessPercentage" class="java.math.BigDecimal"/>
+	<field name="itemCode" class="java.lang.String"/>
+	<field name="totalPieces" class="java.lang.Integer"/>
+	<field name="categoryName" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="manufacturerSeal" class="java.lang.String"/>
+	<field name="stone" class="java.lang.String"/>
+	<field name="grossWeight" class="java.math.BigDecimal"/>
+	<field name="netWeight" class="java.math.BigDecimal"/>
+	<field name="bullionRate" class="java.math.BigDecimal"/>
+	<field name="stoneRatePerCaret" class="java.math.BigDecimal"/>
+	<field name="stoneCost" class="java.math.BigDecimal"/>
+	<field name="tax" class="java.math.BigDecimal"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="salesDate" class="java.sql.Timestamp"/>
+	<field name="salesmanName" class="java.lang.String"/>
+	<field name="itemName1" class="java.lang.String"/>
+	<field name="bullionType1" class="java.lang.String"/>
+	<field name="grossWeight1" class="java.math.BigDecimal"/>
+	<field name="netWeight1" class="java.math.BigDecimal"/>
+	<field name="bullionRate1" class="java.math.BigDecimal"/>
+	<field name="stoneCost1" class="java.math.BigDecimal"/>
+	<field name="itemName2" class="java.lang.String"/>
+	<field name="bullionType2" class="java.lang.String"/>
+	<field name="grossWeight2" class="java.math.BigDecimal"/>
+	<field name="netWeight2" class="java.math.BigDecimal"/>
+	<field name="bullionRate2" class="java.math.BigDecimal"/>
+	<field name="stoneCost2" class="java.math.BigDecimal"/>
+	<field name="itemName3" class="java.lang.String"/>
+	<field name="bullionType3" class="java.lang.String"/>
+	<field name="grossWeight3" class="java.math.BigDecimal"/>
+	<field name="netWeight3" class="java.math.BigDecimal"/>
+	<field name="bullionRate3" class="java.math.BigDecimal"/>
+	<field name="stoneCost3" class="java.math.BigDecimal"/>
+	<field name="itemName4" class="java.lang.String"/>
+	<field name="bullionType4" class="java.lang.String"/>
+	<field name="grossWeight4" class="java.math.BigDecimal"/>
+	<field name="netWeight4" class="java.math.BigDecimal"/>
+	<field name="bullionRate4" class="java.math.BigDecimal"/>
+	<field name="stoneCost4" class="java.math.BigDecimal"/>
+	<field name="netAmount" class="java.math.BigDecimal"/>
+	<field name="totalAmount" class="java.math.BigDecimal"/>
+	<field name="exchangeAmount" class="java.math.BigDecimal"/>
+	<field name="billNo" class="java.lang.String"/>
+	<field name="printInvoice" class="java.lang.Boolean"/>
+	<field name="salesType" class="java.lang.String"/>
+	<field name="cashPayment" class="java.lang.String"/>
+	<field name="cardPayment" class="java.lang.String"/>
+	<field name="chequePayment" class="java.lang.String"/>
+	<field name="voucherPayment" class="java.lang.String"/>
+	<field name="billType" class="java.lang.String"/>
+	<field name="walkIn_Name" class="java.lang.String"/>
+	<field name="walkIn_City" class="java.lang.String"/>
+	<field name="bullionType" class="java.lang.String"/>
+	<field name="karatInfo" class="java.lang.String"/>
+	<field name="numberOfPieces" class="java.lang.Integer"/>
+	<field name="wastageByGrams" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount" class="java.math.BigDecimal"/>
+	<field name="mcByGrams" class="java.math.BigDecimal"/>
+	<field name="mcByAmount" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges" class="java.math.BigDecimal"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="less" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess" class="java.math.BigDecimal"/>
+	<field name="lessAmount" class="java.math.BigDecimal"/>
+	<field name="vtax" class="java.math.BigDecimal"/>
+	<field name="itemCode1" class="java.lang.String"/>
+	<field name="categoryName1" class="java.lang.String"/>
+	<field name="karatInfo1" class="java.lang.String"/>
+	<field name="numberOfPieces1" class="java.lang.Integer"/>
+	<field name="wastageByGrams1" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount1" class="java.math.BigDecimal"/>
+	<field name="mcByGrams1" class="java.math.BigDecimal"/>
+	<field name="mcByAmount1" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges1" class="java.math.BigDecimal"/>
+	<field name="stone1" class="java.lang.String"/>
+	<field name="stoneRatePerCaret1" class="java.math.BigDecimal"/>
+	<field name="amount1" class="java.math.BigDecimal"/>
+	<field name="less1" class="java.math.BigDecimal"/>
+	<field name="vtax1" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess1" class="java.math.BigDecimal"/>
+	<field name="lessPercentage1" class="java.math.BigDecimal"/>
+	<field name="lessAmount1" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal1" class="java.lang.String"/>
+	<field name="itemCode2" class="java.lang.String"/>
+	<field name="categoryName2" class="java.lang.String"/>
+	<field name="karatInfo2" class="java.lang.String"/>
+	<field name="numberOfPieces2" class="java.lang.Integer"/>
+	<field name="wastageByGrams2" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount2" class="java.math.BigDecimal"/>
+	<field name="mcByGrams2" class="java.math.BigDecimal"/>
+	<field name="mcByAmount2" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges2" class="java.math.BigDecimal"/>
+	<field name="stone2" class="java.lang.String"/>
+	<field name="stoneRatePerCaret2" class="java.math.BigDecimal"/>
+	<field name="amount2" class="java.math.BigDecimal"/>
+	<field name="less2" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess2" class="java.math.BigDecimal"/>
+	<field name="vtax2" class="java.math.BigDecimal"/>
+	<field name="lessPercentage2" class="java.math.BigDecimal"/>
+	<field name="lessAmount2" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal2" class="java.lang.String"/>
+	<field name="itemCode3" class="java.lang.String"/>
+	<field name="categoryName3" class="java.lang.String"/>
+	<field name="karatInfo3" class="java.lang.String"/>
+	<field name="numberOfPieces3" class="java.lang.Integer"/>
+	<field name="wastageByGrams3" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount3" class="java.math.BigDecimal"/>
+	<field name="mcByGrams3" class="java.math.BigDecimal"/>
+	<field name="mcByAmount3" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges3" class="java.math.BigDecimal"/>
+	<field name="stone3" class="java.lang.String"/>
+	<field name="stoneRatePerCaret3" class="java.math.BigDecimal"/>
+	<field name="amount3" class="java.math.BigDecimal"/>
+	<field name="less3" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess3" class="java.math.BigDecimal"/>
+	<field name="vtax3" class="java.math.BigDecimal"/>
+	<field name="lessPercentage3" class="java.math.BigDecimal"/>
+	<field name="lessAmount3" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal3" class="java.lang.String"/>
+	<field name="itemCode4" class="java.lang.String"/>
+	<field name="categoryName4" class="java.lang.String"/>
+	<field name="karatInfo4" class="java.lang.String"/>
+	<field name="numberOfPieces4" class="java.lang.Integer"/>
+	<field name="wastageByGrams4" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount4" class="java.math.BigDecimal"/>
+	<field name="mcByGrams4" class="java.math.BigDecimal"/>
+	<field name="mcByAmount4" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges4" class="java.math.BigDecimal"/>
+	<field name="stone4" class="java.lang.String"/>
+	<field name="stoneRatePerCaret4" class="java.math.BigDecimal"/>
+	<field name="amount4" class="java.math.BigDecimal"/>
+	<field name="less4" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess4" class="java.math.BigDecimal"/>
+	<field name="vtax4" class="java.math.BigDecimal"/>
+	<field name="lessPercentage4" class="java.math.BigDecimal"/>
+	<field name="lessAmount4" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal4" class="java.lang.String"/>
+	<field name="totalLess" class="java.math.BigDecimal"/>
+	<field name="lessPerGram" class="java.math.BigDecimal"/>
+	<field name="lessOnWeight" class="java.math.BigDecimal"/>
+	<field name="billAmount" class="java.math.BigDecimal"/>
+	<field name="balanceAmount" class="java.math.BigDecimal"/>
+	<field name="adjustmentAmount" class="java.math.BigDecimal"/>
+	<field name="roundOff" class="java.math.BigDecimal"/>
+	<field name="balToPay" class="java.math.BigDecimal"/>
+	<field name="amtRecd" class="java.math.BigDecimal"/>
+	<field name="exchangeBillNo" class="java.lang.String"/>
+	<field name="cashAmount" class="java.math.BigDecimal"/>
+	<field name="chequeBank" class="java.lang.String"/>
+	<field name="chequeDetails" class="java.lang.String"/>
+	<field name="chequeAmount" class="java.math.BigDecimal"/>
+	<field name="cardBank" class="java.lang.String"/>
+	<field name="cardDetails" class="java.lang.String"/>
+	<field name="cardAmount" class="java.math.BigDecimal"/>
+	<field name="voucherList" class="java.lang.String"/>
+	<field name="voucherDetails" class="java.lang.String"/>
+	<field name="voucherAmount" class="java.math.BigDecimal"/>
+	<field name="formType" class="java.lang.String"/>
+	<field name="greetings" class="java.lang.String"/>
+	<field name="salesOrderID" class="java.lang.Integer"/>
+	<field name="salesOrderAmount" class="java.math.BigDecimal"/>
+	<field name="receiptID" class="java.lang.String"/>
+	<field name="receiptAmount" class="java.math.BigDecimal"/>
+	<field name="totalPieces1" class="java.lang.Integer"/>
+	<field name="totalPieces2" class="java.lang.Integer"/>
+	<field name="totalPieces3" class="java.lang.Integer"/>
+	<field name="totalPieces4" class="java.lang.Integer"/>
+	<field name="salesTypeId" class="java.lang.String"/>
+	<field name="SSCardNo" class="java.lang.String"/>
+	<field name="SSCardAmount" class="java.math.BigDecimal"/>
+	<field name="SSCardGrams" class="java.math.BigDecimal"/>
+	<field name="SSCardNoVal" class="java.lang.String"/>
+	<field name="commissionPercent" class="java.math.BigDecimal"/>
+	<field name="commissionAmount" class="java.math.BigDecimal"/>
+	<field name="calCardAmount" class="java.math.BigDecimal"/>
+	<field name="jewelDiscount" class="java.math.BigDecimal"/>
+	<field name="advance" class="java.math.BigDecimal"/>
+	<field name="rateFixAmount" class="java.math.BigDecimal"/>
+	<field name="rateFixGrams" class="java.math.BigDecimal"/>
+	<field name="rateFixDifferenceAmount" class="java.math.BigDecimal"/>
+	<field name="boardRateSO" class="java.math.BigDecimal"/>
+	<field name="salesReturnId" class="java.lang.String"/>
+	<field name="paymentMode" class="java.lang.String"/>
+	<field name="salesReturnStatus" class="java.lang.String"/>
+	<field name="salesReturnAmount" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges1" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges2" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges3" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges4" class="java.math.BigDecimal"/>
+	<variable name="totalAmount_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
+	</variable>
+	<variable name="billAmount_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{billAmount}]]></variableExpression>
+	</variable>
+	<variable name="totalLess_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalLess}]]></variableExpression>
+	</variable>
+	<variable name="pay_mode" class="java.lang.String"/>
+	<variable name="grossWeight_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{grossWeight}]]></variableExpression>
+	</variable>
+	<variable name="tax_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{tax}]]></variableExpression>
+	</variable>
+	<variable name="g1" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType}=="Gold" ? $F{grossWeight} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="g2" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType1}=="Gold" ? $F{grossWeight1} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="g3" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType2}=="Gold" ? $F{grossWeight2} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="g4" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType3}=="Gold" ? $F{grossWeight3} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="g5" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType4}=="Gold" ? $F{grossWeight4} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="GoldTotgwt" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{g1}+$V{g2}+$V{g3}+$V{g4}+$V{g5}]]></variableExpression>
+	</variable>
+	<variable name="GoldTotSum" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$V{GoldTotgwt}]]></variableExpression>
+	</variable>
+	<variable name="s1" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType}=="Silver" ? $F{grossWeight} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="s2" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType1}=="Silver" ? $F{grossWeight1} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="s3" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType2}=="Silver" ? $F{grossWeight2} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="s4" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType3}=="Silver" ? $F{grossWeight3} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="s5" class="java.lang.Float">
+		<variableExpression><![CDATA[( $F{bullionType4}=="Silver" ? $F{grossWeight4} : 0.0 )]]></variableExpression>
+	</variable>
+	<variable name="SilverTotgwt" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{s1}+$V{s2}+$V{s3}+$V{s4}+$V{s5}]]></variableExpression>
+	</variable>
+	<variable name="SilverTotSum" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$V{SilverTotgwt}]]></variableExpression>
+	</variable>
+	<variable name="qtyg1" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{totalPieces}]]></variableExpression>
+	</variable>
+	<variable name="qtyg2" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{totalPieces1}]]></variableExpression>
+	</variable>
+	<variable name="qtyg3" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{totalPieces2}]]></variableExpression>
+	</variable>
+	<variable name="qtyg4" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{totalPieces3}]]></variableExpression>
+	</variable>
+	<variable name="qtyg5" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{totalPieces4}]]></variableExpression>
+	</variable>
+	<variable name="TotQty_g" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{qtyg1}+$V{qtyg2}+$V{qtyg3}+$V{qtyg4}+$V{qtyg5}]]></variableExpression>
+	</variable>
+	<variable name="QtyTotSum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{TotQty_g}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement mode="Opaque" x="160" y="4" width="53" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total ]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="555" y="5" width="49" height="13"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tax_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="308" y="5" width="47" height="13" forecolor="#000000">
+						<printWhenExpression><![CDATA[$V{GoldTotSum}!=0.000]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{GoldTotSum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="359" y="5" width="52" height="13" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$V{SilverTotSum}!=0.000]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SilverTotSum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="460" y="5" width="52" height="13" forecolor="#000000" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$V{SilverTotSum}!=0.000]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SilverTotSum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="412" y="5" width="47" height="13" forecolor="#000000">
+						<printWhenExpression><![CDATA[$V{GoldTotSum}!=0.000]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{GoldTotSum}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="608" y="5" width="69" height="13" forecolor="#000000"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{billAmount_1}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="513" y="5" width="31" height="13"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{QtyTotSum}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="0" width="700" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="31">
+			<staticText>
+				<reportElement x="244" y="5" width="167" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sales Register]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="36">
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="3" width="45" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="192" y="3" width="23" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="63" y="3" width="103" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{srfrmdate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="231" y="3" width="100" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{srtodate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-20" y="35" width="700" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35">
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="5" width="20" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="34" width="700" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="32" y="5" width="42" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="105" y="6" width="91" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="307" y="3" width="70" height="14" forecolor="#000000"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gross Wt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="554" y="10" width="45" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vat Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="423" y="3" width="70" height="14" forecolor="#000000"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Wt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="305" y="21" width="31" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gold]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="361" y="21" width="31" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Silver]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="415" y="21" width="31" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gold]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="467" y="21" width="31" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Silver]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="611" y="8" width="69" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="233" y="6" width="70" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAN/TIN No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="513" y="10" width="42" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty/Set]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="35" y="2" width="48" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="83" y="2" width="148" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{customerName}.equals("walk_in") ?$F{walkIn_Name} : $F{customerName})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="551" y="2" width="52" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="311" y="2" width="49" height="13" forecolor="#000000">
+					<printWhenExpression><![CDATA[$V{GoldTotgwt}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GoldTotgwt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="2" width="53" height="13" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$V{SilverTotgwt}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SilverTotgwt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="411" y="2" width="49" height="13" forecolor="#000000">
+					<printWhenExpression><![CDATA[$V{GoldTotgwt}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{GoldTotgwt}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="459" y="2" width="53" height="13" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[$V{SilverTotgwt}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SilverTotgwt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="608" y="2" width="69" height="13" forecolor="#000000"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billAmount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="513" y="2" width="31" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotQty_g}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="233" y="2" width="76" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{panNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="2" width="35" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{salesTypeId}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16">
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="585" y="3" width="46" height="13" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="104" y="3" width="480" height="13" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="4" y="3" width="100" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="50">
+			<staticText>
+				<reportElement x="135" y="9" width="409" height="28" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()==0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your selection has returned no results.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

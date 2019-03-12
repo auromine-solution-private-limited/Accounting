@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OldExchangePurchaseRegister" language="groovy" pageWidth="393" pageHeight="393" whenNoDataType="AllSectionsNoDetail" columnWidth="353" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" isFloatColumnFooter="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="31"/>
+	<parameter name="exprfrmdate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="exprtodate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from purchase where purchasedate >=str_to_date($P{exprfrmdate},'%d/%m/%Y')  AND purchasedate<=str_to_date($P{exprtodate},'%d/%m/%Y')
+AND purchaseType='Purchase'  AND bullionType!='Gold Ornaments' AND bullionType!='Silver Ornaments' order by bullionType;]]>
+	</queryString>
+	<field name="purchaseId" class="java.lang.Integer"/>
+	<field name="netlossafterTesting" class="java.math.BigDecimal"/>
+	<field name="itemCode" class="java.lang.String"/>
+	<field name="purchaseAmount" class="java.math.BigDecimal"/>
+	<field name="grossWeight" class="java.math.BigDecimal"/>
+	<field name="stoneWeight" class="java.math.BigDecimal"/>
+	<field name="totalAmount" class="java.math.BigDecimal"/>
+	<field name="bullionType" class="java.lang.String"/>
+	<field name="numberOfPieces" class="java.lang.Integer"/>
+	<field name="paymentMode" class="java.lang.String"/>
+	<field name="purchaseDate" class="java.sql.Timestamp"/>
+	<field name="purchseInvoice" class="java.lang.String"/>
+	<field name="grosslossafterTesting" class="java.math.BigDecimal"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="netWeight" class="java.math.BigDecimal"/>
+	<field name="less" class="java.lang.String"/>
+	<field name="roundOff" class="java.math.BigDecimal"/>
+	<field name="melting" class="java.math.BigDecimal"/>
+	<field name="touch" class="java.math.BigDecimal"/>
+	<field name="vatAmount" class="java.math.BigDecimal"/>
+	<field name="cstAmount" class="java.math.BigDecimal"/>
+	<field name="rate" class="java.math.BigDecimal"/>
+	<field name="mcAmt" class="java.math.BigDecimal"/>
+	<field name="lessValue" class="java.math.BigDecimal"/>
+	<field name="supplierName" class="java.lang.String"/>
+	<field name="purchaseType" class="java.lang.String"/>
+	<field name="purchasebillNO" class="java.lang.Integer"/>
+	<field name="primaryStone" class="java.lang.String"/>
+	<field name="secondaryStone" class="java.lang.String"/>
+	<field name="diamondStone" class="java.lang.String"/>
+	<field name="stoneAmount" class="java.math.BigDecimal"/>
+	<field name="vatPercentage" class="java.math.BigDecimal"/>
+	<field name="cstPercentage" class="java.math.BigDecimal"/>
+	<field name="diamondStoneWt" class="java.math.BigDecimal"/>
+	<field name="stoneTotalAmount" class="java.math.BigDecimal"/>
+	<field name="primaryStoneWt" class="java.math.BigDecimal"/>
+	<field name="primaryStonePcs" class="java.lang.Integer"/>
+	<field name="primaryStoneRate" class="java.math.BigDecimal"/>
+	<field name="secondaryStoneWt" class="java.math.BigDecimal"/>
+	<field name="secondaryStonePcs" class="java.lang.Integer"/>
+	<field name="exchangePurchase" class="java.lang.String"/>
+	<field name="purDescription" class="java.lang.String"/>
+	<field name="lessValue2" class="java.math.BigDecimal"/>
+	<field name="secondaryStoneRate" class="java.math.BigDecimal"/>
+	<field name="currentTime" class="java.lang.String"/>
+	<variable name="purchaseAmount_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
+	</variable>
+	<variable name="grossWeight_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{grossWeight}]]></variableExpression>
+	</variable>
+	<variable name="netWeight_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{netWeight}]]></variableExpression>
+	</variable>
+	<variable name="totalWaste" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{lessValue2}]]></variableExpression>
+	</variable>
+	<variable name="totalAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalAmount}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{bullionType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<line>
+					<reportElement x="0" y="-1" width="230" height="1" forecolor="#666666"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="0" y="0" width="112" height="20">
+						<printWhenExpression><![CDATA[$F{bullionType}!=null]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{bullionType}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="229" y="-1" width="1" height="21"/>
+				</line>
+				<line>
+					<reportElement x="-1" y="0" width="1" height="20"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16">
+				<staticText>
+					<reportElement mode="Opaque" x="3" y="0" width="31" height="16" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total ]]></text>
+				</staticText>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="94" y="0" width="35" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{grossWeight_1}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="0" width="230" height="1"/>
+				</line>
+				<line>
+					<reportElement x="0" y="15" width="229" height="1"/>
+				</line>
+				<line>
+					<reportElement x="229" y="1" width="1" height="15"/>
+				</line>
+				<line>
+					<reportElement x="-1" y="0" width="1" height="15"/>
+				</line>
+				<textField>
+					<reportElement x="134" y="0" width="25" height="15">
+						<printWhenExpression><![CDATA[$V{totalWaste}!=null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalWaste}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="163" y="0" width="67" height="15">
+						<printWhenExpression><![CDATA[$V{totalAmt}!=null]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="31">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="353" height="31" backcolor="#FFFFFF"/>
+				<staticText>
+					<reportElement x="2" y="7" width="140" height="20" forecolor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Weight Based Purchase ]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="142" y="7" width="75" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21">
+			<staticText>
+				<reportElement mode="Opaque" x="119" y="2" width="19" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3" y="1" width="29" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="140" y="1" width="89" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{exprtodate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="230" height="1"/>
+			</line>
+			<line>
+				<reportElement x="229" y="2" width="1" height="18"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="1" width="1" height="19"/>
+			</line>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="34" y="0" width="85" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{exprfrmdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<staticText>
+				<reportElement mode="Opaque" x="3" y="0" width="83" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Particulars ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="94" y="0" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Weight ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="0" width="35" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Waste]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="0" width="57" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="230" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="229" y="-19" width="1" height="38"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="-1" width="1" height="21"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="94" y="0" width="35" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{grossWeight}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="0" width="67" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalAmount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="229" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="-21" width="1" height="22"/>
+			</line>
+			<textField>
+				<reportElement x="134" y="1" width="23" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{lessValue2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<summary>
+		<band height="13">
+			<staticText>
+				<reportElement x="3" y="0" width="174" height="13" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()==0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman CE" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your selection has returned no results.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

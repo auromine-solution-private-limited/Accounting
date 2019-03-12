@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashReceipt" language="groovy" pageWidth="700" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="crfrmdate" class="java.lang.String"/>
+	<parameter name="crtodate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     *
+FROM
+     `journal` journal
+WHERE
+     journalType = 'Receipt'
+     and journalDate >= str_to_date($P{crfrmdate},'%d/%m/%Y')
+ AND journalDate <= str_to_date($P{crtodate},'%d/%m/%Y')]]>
+	</queryString>
+	<field name="journalId" class="java.lang.Integer"/>
+	<field name="debitAmount" class="java.math.BigDecimal"/>
+	<field name="creditAmount" class="java.math.BigDecimal"/>
+	<field name="transactionId" class="java.lang.String"/>
+	<field name="journalNO" class="java.lang.String"/>
+	<field name="debitAccountName" class="java.lang.String"/>
+	<field name="creditAccountName" class="java.lang.String"/>
+	<field name="journalDate" class="java.sql.Timestamp"/>
+	<field name="journalType" class="java.lang.String"/>
+	<field name="narration" class="java.lang.String"/>
+	<field name="receiptType" class="java.lang.String"/>
+	<field name="debitCode" class="java.lang.String"/>
+	<field name="creditCode" class="java.lang.String"/>
+	<variable name="debitAmount_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{debitAmount}]]></variableExpression>
+	</variable>
+	<variable name="creditAmount_1" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{creditAmount}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupHeader>
+			<band height="1"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="26">
+				<staticText>
+					<reportElement mode="Opaque" x="445" y="3" width="45" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total ]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="496" y="4" width="124" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{debitAmount_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="35">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="701" height="55" backcolor="#006699"/>
+				<staticText>
+					<reportElement x="502" y="20" width="180" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cash Receipt]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="32">
+			<textField>
+				<reportElement x="211" y="7" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{crfrmdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{crtodate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="319" y="5" width="23" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="160" y="6" width="45" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="549" y="7" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24">
+			<staticText>
+				<reportElement mode="Opaque" x="86" y="0" width="92" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Journal No]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="21" width="658" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="177" y="0" width="135" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Journal Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="0" width="84" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="312" y="0" width="182" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Account Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="494" y="0" width="166" height="20" forecolor="#006699" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="2" y="21" width="658" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="1" width="84" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{journalNO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="496" y="0" width="124" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="207" y="0" width="95" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="312" y="1" width="177" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{creditAccountName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="9" y="1" width="71" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="35">
+			<textField>
+				<reportElement mode="Opaque" x="2" y="21" width="614" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="616" y="22" width="46" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="67">
+			<staticText>
+				<reportElement x="36" y="11" width="624" height="38" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()==0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your selection has returned no results.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

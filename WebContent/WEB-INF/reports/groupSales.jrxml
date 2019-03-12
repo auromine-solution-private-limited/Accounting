@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="groupSales" language="groovy" pageWidth="393" pageHeight="393" columnWidth="353" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="frmDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT stock_categoryname,sum(-stock_clqty) as qty,sum(-stock_cltotalgrossweight) as grossweight  FROM jewelstock j where stock_transtype='Sales' and stock_transDate >=str_to_date($P{frmDate},'%d/%m/%Y') AND stock_transDate<=str_to_date($P{toDate},'%d/%m/%Y') group by stock_categoryname;]]>
+	</queryString>
+	<field name="stock_categoryname" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Long"/>
+	<field name="grossweight" class="java.math.BigDecimal"/>
+	<variable name="totalQty" class="java.lang.Integer" resetType="Group" resetGroup="category" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="totalWeight" class="java.math.BigDecimal" resetType="Group" resetGroup="category" calculation="Sum">
+		<variableExpression><![CDATA[$F{grossweight}]]></variableExpression>
+	</variable>
+	<group name="category">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="3" y="0" width="30" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total :]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="1" width="235" height="1"/>
+				</line>
+				<line>
+					<reportElement x="234" y="0" width="1" height="20"/>
+				</line>
+				<line>
+					<reportElement x="-1" y="1" width="1" height="19"/>
+				</line>
+				<line>
+					<reportElement x="0" y="18" width="234" height="1"/>
+				</line>
+				<textField>
+					<reportElement x="99" y="1" width="20" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalQty}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="146" y="1" width="63" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{totalWeight}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Group Sales]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="43" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="0" width="21" height="19"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="234" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="19" width="234" height="1"/>
+			</line>
+			<line>
+				<reportElement x="234" y="1" width="1" height="19"/>
+			</line>
+			<textField>
+				<reportElement x="39" y="2" width="74" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{frmDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="2" width="66" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{toDate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="0" width="1" height="21"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="79" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Particulars]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="40" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="0" width="63" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Weight]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="0" y="18" width="235" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="234" y="-21" width="1" height="22"/>
+			</line>
+			<textField>
+				<reportElement x="2" y="1" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{stock_categoryname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="1" width="30" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="1" width="63" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{grossweight}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="234" y="0" width="1" height="21"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="0" width="1" height="21"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

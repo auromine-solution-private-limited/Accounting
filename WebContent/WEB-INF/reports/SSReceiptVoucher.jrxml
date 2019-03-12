@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptVoucher" language="groovy" pageWidth="432" pageHeight="504" whenNoDataType="NoDataSection" columnWidth="392" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="com.mycompany.NumToWords" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="104"/>
+	<scriptlet name="wordinnumber" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="receiptNO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT l.address1,l.address2,l.ledgerName,l.city as ledgerCity,l.pinCode as
+ledgerPinCode,l.panNumber, s.*, c.city as companyCity,c.*,cd.installment FROM  jewellery.ledger l
+RIGHT OUTER JOIN jewellery.saving_schemereceipt s on l.ledgerName = s.customerName
+RIGHT OUTER JOIN jewellery.cardissue cd on cd.cardNo = s.cardNo,
+jewellery.companyinfo c where s.receiptNO=$P{receiptNO} and s.formType="Saving Scheme Receipt"]]>
+	</queryString>
+	<field name="address1" class="java.lang.String"/>
+	<field name="address2" class="java.lang.String"/>
+	<field name="ledgerName" class="java.lang.String"/>
+	<field name="ledgerCity" class="java.lang.String"/>
+	<field name="ledgerPinCode" class="java.lang.String"/>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="receiptId" class="java.lang.Integer"/>
+	<field name="schemeType" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="formType" class="java.lang.String"/>
+	<field name="receiptAmount" class="java.math.BigDecimal"/>
+	<field name="narration" class="java.lang.String"/>
+	<field name="schemeName" class="java.lang.String"/>
+	<field name="schemeInAmount" class="java.math.BigDecimal"/>
+	<field name="schemeInGrams" class="java.math.BigDecimal"/>
+	<field name="cardNo" class="java.lang.String"/>
+	<field name="receiptDate" class="java.sql.Timestamp"/>
+	<field name="debitAccount" class="java.lang.String"/>
+	<field name="receiptNO" class="java.lang.String"/>
+	<field name="creditAccount" class="java.lang.String"/>
+	<field name="paymentAmount" class="java.math.BigDecimal"/>
+	<field name="receiptInstallmentNO" class="java.lang.Integer"/>
+	<field name="paymentClosingGrams" class="java.math.BigDecimal"/>
+	<field name="companyCity" class="java.lang.String"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="reference" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="companyAddress" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="tinNumber" class="java.lang.String"/>
+	<field name="CSTNumber" class="java.lang.String"/>
+	<field name="c_email" class="java.lang.String"/>
+	<field name="posBarcodePrint" class="java.lang.String"/>
+	<field name="posInvoicePrint" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<field name="ornBarcodePrint" class="java.lang.String"/>
+	<field name="ornInvoicePrint" class="java.lang.String"/>
+	<field name="installment" class="java.lang.Integer"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="97"/>
+	</title>
+	<pageHeader>
+		<band height="161">
+			<rectangle radius="10">
+				<reportElement x="4" y="-93" width="380" height="88"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="-90" width="240" height="16" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="-75" width="180" height="16" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="-45" width="180" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="9" y="3" width="217" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="313" y="16" width="67" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receiptNO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="226" y="16" width="88" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[  RECEIPT. NO    : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="30" width="88" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[  RECEIPT DATE : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="313" y="31" width="67" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receiptDate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="50" width="383" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="9" y="17" width="217" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{address1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="93" y="30" width="89" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ledgerPinCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="-59" width="180" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyCity}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="9" y="30" width="85" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ledgerCity}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="55" width="212" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["SCHEME NAME : "+$F{schemeName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="69" width="212" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["CARD NUMBER : "+$F{cardNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="81" width="231" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{receiptInstallmentNO}!=0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["INSTALLMENT NO : "+$F{receiptInstallmentNO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="188" y="143" width="193" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["NARRATION : "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="286" y="-45" width="88" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORIGINAL/COPY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="-25" width="88" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHIT RECEIPT]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="109" width="373" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{schemeInAmount}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_SCRIPTLET}.convert($F{schemeInAmount})+" ONLY"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="8" y="124" width="218" height="14" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{schemeInGrams}!=0.000]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GRAMS RECEIVED : "+$F{schemeInGrams}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="9" y="96" width="210" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{schemeInAmount}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CASH RECEIVED : "+$F{schemeInAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="50">
+			<line>
+				<reportElement x="1" y="0" width="383" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="219" y="4" width="162" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["FOR : "+$F{companyName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="4" width="136" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<text><![CDATA[CUSTOMER'S SIGNATORY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="35" width="129" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[AUTHORISED SIGNATORY]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<summary>
+		<band/>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="22" y="16" width="339" height="20"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO DATA FOUND FOR GIVEN RECEIPT NUMBER.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="464" pageHeight="767" whenNoDataType="NoDataSection" columnWidth="424" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="com.mycompany.NumToWords" isIgnorePagination="true">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1"/>
+	<scriptlet name="amountinword" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="posSalesId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *,c.* FROM possales LEFT JOIN possalesitem ON possales.posSalesId=possalesitem.posSalesId,jewellery.companyinfo c
+WHERE (possales.salesType='POS Sales' or possales.salesType='Estimate POS Sales') and possales.billNo=$P{posSalesId} AND quantity!=0]]>
+	</queryString>
+	<field name="posSalesId" class="java.lang.Integer"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="salesmanName" class="java.lang.String"/>
+	<field name="netAmount" class="java.math.BigDecimal"/>
+	<field name="totalAmount" class="java.math.BigDecimal"/>
+	<field name="billNo" class="java.lang.String"/>
+	<field name="printInvoice" class="java.lang.Boolean"/>
+	<field name="salesType" class="java.lang.String"/>
+	<field name="roundOff" class="java.math.BigDecimal"/>
+	<field name="cashAmount" class="java.math.BigDecimal"/>
+	<field name="chequeBank" class="java.lang.String"/>
+	<field name="chequeDetails" class="java.lang.String"/>
+	<field name="chequeAmount" class="java.math.BigDecimal"/>
+	<field name="cardBank" class="java.lang.String"/>
+	<field name="cardDetails" class="java.lang.String"/>
+	<field name="cardAmount" class="java.math.BigDecimal"/>
+	<field name="voucherList" class="java.lang.String"/>
+	<field name="voucherDetails" class="java.lang.String"/>
+	<field name="voucherAmount" class="java.math.BigDecimal"/>
+	<field name="receiptType" class="java.lang.String"/>
+	<field name="walkinAddress" class="java.lang.String"/>
+	<field name="subTotal" class="java.math.BigDecimal"/>
+	<field name="transactionNo" class="java.lang.Integer"/>
+	<field name="referencePosno" class="java.lang.Integer"/>
+	<field name="walkinCustomer" class="java.lang.String"/>
+	<field name="taxinAmount" class="java.math.BigDecimal"/>
+	<field name="cheque" class="java.lang.String"/>
+	<field name="giftVoucher" class="java.lang.String"/>
+	<field name="returnreason" class="java.lang.String"/>
+	<field name="cash" class="java.lang.String"/>
+	<field name="salesdate" class="java.sql.Timestamp"/>
+	<field name="card" class="java.lang.String"/>
+	<field name="counterCash" class="java.math.BigDecimal"/>
+	<field name="totalAmountReceived" class="java.math.BigDecimal"/>
+	<field name="balanceToCustomer" class="java.math.BigDecimal"/>
+	<field name="billposType" class="java.lang.String"/>
+	<field name="salesItemID" class="java.lang.Integer"/>
+	<field name="totalPieces" class="java.lang.Integer"/>
+	<field name="categoryName" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="salesRate" class="java.math.BigDecimal"/>
+	<field name="itemStatus" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="itemSalesType" class="java.lang.String"/>
+	<field name="posItemCode" class="java.lang.String"/>
+	<field name="discountAmount" class="java.math.BigDecimal"/>
+	<field name="salesAmount" class="java.math.BigDecimal"/>
+	<field name="salesTax" class="java.math.BigDecimal"/>
+	<field name="POSdeleted" class="java.lang.Boolean"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="reference" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="companyAddress" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="tinNumber" class="java.lang.String"/>
+	<field name="CSTNumber" class="java.lang.String"/>
+	<field name="c_email" class="java.lang.String"/>
+	<field name="posBarcodePrint" class="java.lang.String"/>
+	<field name="posInvoicePrint" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<field name="ornBarcodePrint" class="java.lang.String"/>
+	<field name="ornInvoicePrint" class="java.lang.String"/>
+	<variable name="netWeight_1" class="java.lang.Float" resetType="Group" resetGroup="Totalwt" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="amount_1" class="java.lang.Float" resetType="Group" resetGroup="Totalwt" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="BalAmt" class="java.lang.String"/>
+	<variable name="MC" class="java.lang.String"/>
+	<variable name="less_1" class="java.lang.Float" resetType="Group" resetGroup="Totalwt" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="Date" class="java.lang.String"/>
+	<variable name="Rate" class="java.lang.Float">
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="tot_qty" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantity}]]></variableExpression>
+	</variable>
+	<group name="Totalwt" keepTogether="true">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="90">
+				<line>
+					<reportElement x="2" y="0" width="422" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement x="171" y="1" width="37" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_qty}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="113" y="2" width="51" height="12" backcolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[TOT QTY:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="277" y="21" width="62" height="12" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[SUB TOTAL:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="277" y="54" width="61" height="12" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Total Amount:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="275" y="36" width="65" height="12" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Total Tax Amt:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="340" y="20" width="68" height="16"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{subTotal}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="334" y="36" width="73" height="16"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{taxinAmount}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="328" y="53" width="80" height="17"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{netAmount}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="6" y="18" width="64" height="12" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{cashAmount}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Cash Received ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="6" y="31" width="122" height="12" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{chequeAmount}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Amount Received in Cheque]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="6" y="46" width="115" height="12" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{cardAmount}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Amount Received in Card]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="6" y="60" width="124" height="12" isRemoveLineWhenBlank="true" backcolor="#FFFFFF">
+						<printWhenExpression><![CDATA[$F{voucherAmount}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Amount Received in Voucher]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="133" y="18" width="80" height="13" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[$F{counterCash}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{counterCash}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="132" y="31" width="80" height="13" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[$F{chequeAmount}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{chequeAmount}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="132" y="45" width="80" height="13" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[$F{cardAmount}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cardAmount}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="132" y="60" width="80" height="13" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[$F{voucherAmount}!=0.00]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{voucherAmount}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="133" y="74" width="80" height="13" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{totalAmountReceived}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="339" y="72" width="69" height="13" isRemoveLineWhenBlank="true">
+						<printWhenExpression><![CDATA[$F{balanceToCustomer}>0]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{balanceToCustomer}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="6" y="74" width="104" height="13" isRemoveLineWhenBlank="true"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Total Amount Received:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="278" y="70" width="62" height="13">
+						<printWhenExpression><![CDATA[$F{balanceToCustomer}>0]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Balance Paid:]]></text>
+				</staticText>
+			</band>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="50">
+			<staticText>
+				<reportElement mode="Opaque" x="7" y="36" width="44" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BILL NO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="151" y="-5" width="92" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="81" y="-17" width="238" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="151" y="7" width="102" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{city}+"-"+$F{pincode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="20" width="91" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{phone}!=""]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ph:"+$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="237" y="20" width="82" height="13">
+					<printWhenExpression><![CDATA[$F{fax}!=""]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fax:"+$F{fax}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="19" y="19" width="127" height="13">
+					<printWhenExpression><![CDATA[$F{tinNumber}!=""]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tin No:"+$F{tinNumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="323" y="21" width="100" height="13">
+					<printWhenExpression><![CDATA[$F{CSTNumber}!=""]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CST No:"+$F{CSTNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="165" y="36" width="73" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TAX INVOICE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="46" y="35" width="36" height="13"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billNo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="355" y="32" width="69" height="16"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{salesdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="316" y="36" width="39" height="12" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DATE:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="1" width="57" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ITEM CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="330" y="1" width="39" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TAX%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="271" y="1" width="53" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DISCOUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="369" y="0" width="45" height="12" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[AMOUNT]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="13" width="425" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="0" width="25" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[S.NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="87" y="0" width="69" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DESCRIPTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="167" y="0" width="23" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[QTY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="209" y="0" width="28" height="12" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RATE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="0" width="425" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Immediate"/>
+		<band height="15">
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="2" width="26" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="33" y="2" width="51" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{posItemCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="171" y="2" width="32" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="209" y="2" width="65" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesRate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="277" y="2" width="53" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discountAmount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="333" y="2" width="31" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesTax}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="365" y="2" width="58" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesAmount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="86" y="2" width="70" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement mode="Opaque" x="6" y="1" width="366" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="372" y="1" width="40" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="31"/>
+	</summary>
+	<noData>
+		<band height="500">
+			<staticText>
+				<reportElement x="23" y="182" width="397" height="43"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Invoice Found For The Given Invoice Number...]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

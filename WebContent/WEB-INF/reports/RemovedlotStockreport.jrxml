@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RemovedlotStockreport" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="stockToDate" class="java.lang.String"/>
+	<parameter name="stockFromDate" class="java.lang.String"/>
+	<parameter name="lotItemName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *from lotstock WHERE lotDate>=str_to_date($P{stockFromDate},'%d/%m/%Y') AND lotDate<=str_to_date($P{stockToDate},'%d/%m/%Y') AND lotitemname=$P{lotItemName} AND lottype='Return Lot Stock']]>
+	</queryString>
+	<field name="lotId" class="java.lang.Integer"/>
+	<field name="lotDate" class="java.sql.Timestamp"/>
+	<field name="lotItemName" class="java.lang.String"/>
+	<field name="lotType" class="java.lang.String"/>
+	<field name="lotCode" class="java.lang.String"/>
+	<field name="grossWeight" class="java.math.BigDecimal"/>
+	<field name="netWeight" class="java.math.BigDecimal"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="totalGrossWeight" class="java.math.BigDecimal"/>
+	<field name="totalQuantity" class="java.lang.Integer"/>
+	<field name="description" class="java.lang.String"/>
+	<variable name="totgwtsum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{grossWeight}*(-1)]]></variableExpression>
+	</variable>
+	<variable name="totnetwtsum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{netWeight}*(-1)]]></variableExpression>
+	</variable>
+	<variable name="totqtysum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantity}*(-1)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="69" y="-1" width="242" height="30"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Removed Lot Stock]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="3" y="4" width="177" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["From Date:"+$P{stockFromDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="4" width="113" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["To:"+$P{stockToDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="4" width="28" height="13"/>
+				<textElement/>
+				<text><![CDATA[S.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="3" width="34" height="13"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="4" width="78" height="13"/>
+				<textElement/>
+				<text><![CDATA[Gross Weight]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="3" width="62" height="13"/>
+				<textElement/>
+				<text><![CDATA[Net Weight]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="5" width="61" height="13"/>
+				<textElement/>
+				<text><![CDATA[Qty(Set)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="3" width="100" height="13"/>
+				<textElement/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="2" width="551" height="1"/>
+			</line>
+			<line>
+				<reportElement x="2" y="17" width="551" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17">
+			<textField>
+				<reportElement x="33" y="2" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lotDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="1" width="70" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{grossWeight}*(-1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="0" width="77" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{netWeight}*(-1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="2" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{quantity}*(-1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="1" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="0" width="24" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="106" y="4" width="79" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totgwtsum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="3" width="81" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totnetwtsum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="5" width="72" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{totqtysum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="1" width="554" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="50"/>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="215" y="25" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[No Record Found]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,1723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashBook" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1452"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<scriptlet name="Journal" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="FromDateJournalDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EndJournalDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="debitSum" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
+	</parameter>
+	<parameter name="creditSum" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[0.00]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     companyinfo.`companyName` AS companyinfo_companyName,
+     companyinfo.`reference` AS companyinfo_reference,
+     companyinfo.`website` AS companyinfo_website,
+     companyinfo.`panNumber` AS companyinfo_panNumber,
+     companyinfo.`city` AS companyinfo_city,
+     companyinfo.`pincode` AS companyinfo_pincode,
+     companyinfo.`companyAddress` AS companyinfo_companyAddress,
+     companyinfo.`phone` AS companyinfo_phone,
+     companyinfo.`fax` AS companyinfo_fax,
+     companyinfo.`tinNumber` AS companyinfo_tinNumber,
+     companyinfo.`CSTNumber` AS companyinfo_CSTNumber,
+     companyinfo.`c_email` AS companyinfo_c_email,
+     companyinfo.`country` AS companyinfo_country,
+     DATE_FORMAT(journal.journalDate, "%d/%m/%Y") AS formattedJournlDate
+FROM
+     `journal` journal,
+     `companyinfo` companyinfo
+WHERE
+     journalDate >= str_to_date($P{FromDateJournalDate},'%d/%m/%Y')
+ AND journalDate <= str_to_date($P{EndJournalDate},'%d/%m/%Y')
+ORDER BY
+     journalType]]>
+	</queryString>
+	<field name="journalId" class="java.lang.Integer"/>
+	<field name="debitAmount" class="java.math.BigDecimal"/>
+	<field name="creditAmount" class="java.math.BigDecimal"/>
+	<field name="transactionId" class="java.lang.String"/>
+	<field name="journalNO" class="java.lang.String"/>
+	<field name="debitAccountName" class="java.lang.String"/>
+	<field name="creditAccountName" class="java.lang.String"/>
+	<field name="journalDate" class="java.sql.Timestamp"/>
+	<field name="journalType" class="java.lang.String"/>
+	<field name="narration" class="java.lang.String"/>
+	<field name="receiptType" class="java.lang.String"/>
+	<field name="debitCode" class="java.lang.String"/>
+	<field name="creditCode" class="java.lang.String"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="reference" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="companyAddress" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="tinNumber" class="java.lang.String"/>
+	<field name="CSTNumber" class="java.lang.String"/>
+	<field name="c_email" class="java.lang.String"/>
+	<field name="posBarcodePrint" class="java.lang.String"/>
+	<field name="posInvoicePrint" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<field name="ornBarcodePrint" class="java.lang.String"/>
+	<field name="ornInvoicePrint" class="java.lang.String"/>
+	<field name="companyinfo_companyName" class="java.lang.String"/>
+	<field name="companyinfo_reference" class="java.lang.String"/>
+	<field name="companyinfo_website" class="java.lang.String"/>
+	<field name="companyinfo_panNumber" class="java.lang.String"/>
+	<field name="companyinfo_city" class="java.lang.String"/>
+	<field name="companyinfo_pincode" class="java.lang.String"/>
+	<field name="companyinfo_companyAddress" class="java.lang.String"/>
+	<field name="companyinfo_phone" class="java.lang.String"/>
+	<field name="companyinfo_fax" class="java.lang.String"/>
+	<field name="companyinfo_tinNumber" class="java.lang.String"/>
+	<field name="companyinfo_CSTNumber" class="java.lang.String"/>
+	<field name="companyinfo_c_email" class="java.lang.String"/>
+	<field name="companyinfo_country" class="java.lang.String"/>
+	<field name="formattedJournlDate" class="java.lang.String"/>
+	<variable name="SalesorderDebitAmount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Sales Order Cash Receipt") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="PurchaseCashAmount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Purchase Payment") ? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="Purchasecashpayment(walk-in)" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Cash Purchase")? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="PurchaseReturncashreceipt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Purchase Return Receipt") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="Ornamentalsalesbycashreceiptonly" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Sales Cash Receipt") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="BullionSalesReceipt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Bullion Sales Receipt") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="BullionSaleswalknreceipt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Cash Bullion Sales")? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="PosSalesBycashonly" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("POS Sales Cash Receipt") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="PosSalesBycashonly(walk-in)" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("POS Sales") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="PosSalesReturnPayment" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("POS Sales Return Payment") ? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="PospurchasePaymentonly " class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("POS Purchase Payment") ? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="PospurchasereturnReceipt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("POS Purchase Return Receipt") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="JournalReceipt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Receipt") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="Payment" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Payment") ? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="Contra " class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Contra") && ($F{debitCode}=="A105") ? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SAVINGSRECEIPT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( ($F{journalType}.equals("SAVINGS RECEIPT") && $F{debitCode}=="A105") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SAVINGSPAYMENT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( ($F{journalType}.equals("SAVINGS PAYMENT") && $F{creditCode}== "A105") ? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SumofDebitAmount" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$P{debitSum}.add($V{Contra }.add($V{JournalReceipt}.add($V{PospurchasereturnReceipt}.add($V{PosSalesBycashonly(walk-in)}.add($V{PurchaseReturncashreceipt}.add($V{SalesorderDebitAmount}.add($V{openingBal_Debit_sum}.add($V{OranamentalSalesWalkinDebitSum}.add($V{Ornamentalsalesbycashreceiptonly}.add($V{BullionSalesReceipt}.add($V{BullionSaleswalknreceipt}.add($V{PosSalesBycashonly}.add($V{SAVINGSRECEIPT})))))))))))))]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SumofCreditAmount" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$P{creditSum}.add($V{Payment}.add($V{PospurchasePaymentonly }.add($V{PosSalesReturnPayment}.add($V{Purchasecashpayment(walk-in)}.add($V{PurchaseCashAmount}.add($V{Contra(Deposit).}.add($V{SalesReturnCashPayment}.add($V{openingBal_Credit_sum}.add($V{SAVINGSPAYMENT})))))))))]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="CONVERT_CONSTANT" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[-1]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SubtractedClosing" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{SumofDebitAmount}.subtract( $V{SumofCreditAmount} )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SummaryDebitamount" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SummaryCreditAmount" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[(($V{SubtractedClosing} < 0 )? ($V{SubtractedClosing}.multiply( $V{CONVERT_CONSTANT} )) : $V{SubtractedClosing})]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="OpeningBalanceDebitSum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[((($F{creditAccountName}=="Opening Balance") && ($F{creditCode}=="A105")) ? $F{debitAmount}:0.00)]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="OpeningBalanceCreditSum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[((($F{debitAccountName}=="Opening Balance") && ($F{debitCode}=="A105")) ? $F{creditAmount}:0.00)]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="openingBal_Debit_sum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[((($F{creditAccountName}=="Opening Balance") && ($F{creditCode}=="A105")) ? $F{debitAmount}:0.00)]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="openingBal_Credit_sum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[(($F{debitAccountName}=="Opening Balance" && $F{debitCode}=="A105" ? $F{creditAmount}:0.00))]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="OranamentalSalesWalkinDebitSum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Cash Sales") ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="Contra(Deposit)." class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( ($F{journalType}.equals("Contra") && ($F{debitCode}!="A105")) ? $F{debitAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SalesReturnCashPayment" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journalType}.equals("Sales Return Payment") ? $F{creditAmount} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<group name="Salesorderbycash" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{journalType}=="Sales Order Cash Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="0" width="100" height="13"/>
+					<textElement/>
+					<text><![CDATA[Sales Order By Cash]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="11" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Sales Order Cash Receipt"]]></printWhenExpression>
+				<textField isBlankWhenNull="true">
+					<reportElement x="326" y="4" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{SalesorderDebitAmount}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Purchasecash payment" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{journalType}=="Purchase Payment"]]></printWhenExpression>
+				<line>
+					<reportElement x="0" y="12" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="6" y="0" width="131" height="13"/>
+					<textElement/>
+					<text><![CDATA[Purchase  cash payment]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Purchase Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="4" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement x="432" y="4" width="100" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{PurchaseCashAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Purchasecashpayment(walk-in)" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Purchase"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="0" width="163" height="13"/>
+					<textElement/>
+					<text><![CDATA[Purchase  cash payment(walk-in)]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="13" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="19">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Purchase"]]></printWhenExpression>
+				<line>
+					<reportElement x="0" y="18" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="284" y="4" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="431" y="0" width="100" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{Purchasecashpayment(walk-in)}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="PurchaseReturncashreceipt" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<printWhenExpression><![CDATA[$F{journalType}=="Purchase Return Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="0" width="149" height="15"/>
+					<textElement/>
+					<text><![CDATA[Purchase Return cash receipt]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="15" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="Purchase Return Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{PurchaseReturncashreceipt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Ornamental salesby cashre ceipt only" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<printWhenExpression><![CDATA[$F{journalType}=="Sales Cash Receipt"]]></printWhenExpression>
+				<line>
+					<reportElement x="0" y="21" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="1" y="2" width="132" height="19"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Sales by cash receipt]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="Sales Cash Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{Ornamentalsalesbycashreceiptonly}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Bullion Sales receipt" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<printWhenExpression><![CDATA[$F{journalType}=="Bullion Sales Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="2" width="100" height="13"/>
+					<textElement/>
+					<text><![CDATA[Bullion Sales receipt]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="15" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="Bullion Sales Receipt"]]></printWhenExpression>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{BullionSalesReceipt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Bullion Sales walk-in receipt" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Bullion Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="3" width="140" height="13"/>
+					<textElement/>
+					<text><![CDATA[Bullion Sales walk-in receipt]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="15" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Bullion Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{BullionSaleswalknreceipt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Pos Sales By cash only" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Sales Cash Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="1" width="116" height="13"/>
+					<textElement/>
+					<text><![CDATA[Pos Sales By cash only]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Sales Cash Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{PosSalesBycashonly}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Pos Sales By cash only(walk-in)" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="2" width="154" height="13"/>
+					<textElement/>
+					<text><![CDATA[Pos Sales By cash only(walk-in)]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="15" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{PosSalesBycashonly(walk-in)}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Pos Sales Return Payment" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Sales Return Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="2" width="130" height="13"/>
+					<textElement/>
+					<text><![CDATA[Pos Sales Return Payment]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="14" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Sales Return Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="15" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="446" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{PosSalesReturnPayment}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Pos purchase Payment only" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Purchase Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="1" width="138" height="13"/>
+					<textElement/>
+					<text><![CDATA[Pos purchase Payment only]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="15" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Purchase Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="445" y="2" width="85" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{PospurchasePaymentonly }]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Pos purchase return Receipt" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Purchase Return Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="0" width="147" height="13"/>
+					<textElement/>
+					<text><![CDATA[Pos purchase return Receipt]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="14" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="POS Purchase Return Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{PospurchasereturnReceipt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Journal Receipt" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<printWhenExpression><![CDATA[$F{journalType}=="Receipt"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="0" width="100" height="13"/>
+					<textElement/>
+					<text><![CDATA[Receipt]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="13" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Receipt"]]></printWhenExpression>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{JournalReceipt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Payment" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="1" width="44" height="13"/>
+					<textElement/>
+					<text><![CDATA[Payment]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="442" y="4" width="89" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{Payment}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Contra" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Contra"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="2" width="41" height="16"/>
+					<textElement/>
+					<text><![CDATA[Contra]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="Contra"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{Contra }]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="446" y="0" width="85" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{Contra(Deposit).}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Savings Receipt" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="SAVINGS RECEIPT" && $F{debitCode} == "A105"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="3" width="85" height="13"/>
+					<textElement/>
+					<text><![CDATA[Savings Receipt]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$F{journalType}=="SAVINGS RECEIPT" && $F{debitCode}=="A105"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="326" y="3" width="85" height="13">
+						<printWhenExpression><![CDATA[$F{debitCode}=="A105"]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{SAVINGSRECEIPT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="SAVINGS PAYMENT" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<printWhenExpression><![CDATA[$F{journalType}=="SAVINGS PAYMENT" && $F{creditCode}=="A105"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="0" width="85" height="13"/>
+					<textElement/>
+					<text><![CDATA[Savings Payment]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="13" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="SAVINGS PAYMENT" && $F{creditCode}=="A105"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="446" y="4" width="86" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SAVINGSPAYMENT}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Opening Balance of a cash  ledger">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Opening Balance"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="0" width="164" height="13"/>
+					<textElement/>
+					<text><![CDATA[Opening Balance of a all cash ledger]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="13" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Opening Balance"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="325" y="1" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{openingBal_Debit_sum}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="447" y="3" width="85" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{openingBal_Credit_sum}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Ornamental sales by cash receipt(walk-in)">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="5" y="1" width="192" height="13"/>
+					<textElement/>
+					<text><![CDATA[Ornamental sales by cash receipt(walk-in)]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="13" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Cash Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="3" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="17" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="325" y="1" width="85" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{OranamentalSalesWalkinDebitSum}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Sales Return cash Payment Group Header 1">
+		<groupExpression><![CDATA[$F{journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<printWhenExpression><![CDATA[$F{journalType}=="Sales Return Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="6" y="1" width="192" height="13"/>
+					<textElement/>
+					<text><![CDATA[Sales Return cash Payment]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="13" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<printWhenExpression><![CDATA[$F{journalType}=="Sales Return Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="284" y="2" width="35" height="13"/>
+					<textElement/>
+					<text><![CDATA[Total-->]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="16" width="555" height="2"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="448" y="2" width="84" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SalesReturnCashPayment}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="101">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1" y="23" width="244" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyinfo_companyName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="81" y="77" width="400" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Cash Book Report Dated From "+$P{FromDateJournalDate}+" To "+$P{EndJournalDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="37" width="244" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="210" y="1" width="140" height="20" isPrintInFirstWholeBand="true"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cash Book Register]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="4" y="23" width="239" height="45">
+					<printWhenExpression><![CDATA[$F{companyinfo_companyName}==null]]></printWhenExpression>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["CB_CompanyInfo.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="51" width="100" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="51" width="100" height="15" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pincode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34">
+			<staticText>
+				<reportElement x="132" y="0" width="100" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Particular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="0" width="59" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Debit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="0" width="49" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Credit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="0" width="100" height="13"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="14" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="-1" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<subreport runToBottom="false">
+				<reportElement x="1" y="15" width="555" height="18" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="FromDateJournalDate">
+					<subreportParameterExpression><![CDATA[$P{FromDateJournalDate}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["FromDateOpeningReport.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="0" y="33" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Sales Order Cash Receipt"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="1" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="76" y="3" width="249" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" From "+$F{creditAccountName}+" Sales order No "+$F{narration}+" To "+ $F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[$F{journalType}=="Purchase Payment"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="76" y="0" width="279" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" To "+$F{debitAccountName}+" Purchase No "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="448" y="0" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[$F{journalType}=="Cash Purchase"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="448" y="0" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="76" y="0" width="279" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+"-Purchase No :"+$F{narration}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Purchase Return Receipt"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="76" y="0" width="246" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" From "+$F{creditAccountName}+" Sales no :"+$F{narration}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Sales Cash Receipt"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="76" y="0" width="246" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" from "+$F{creditAccountName}+" Sales no:"+$F{narration}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Bullion Sales Receipt"]]></printWhenExpression>
+			<textField>
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="1" width="244" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" From "+$F{creditAccountName}+" Bullion Sales No "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Cash Bullion Sales"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="1" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="1" width="235" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Bullion Sales no :  Ref No:"+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="POS Sales Cash Receipt"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="2" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="2" width="246" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" From "+$F{creditAccountName}+" Pos Sales No "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="POS Sales"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="0" width="246" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" From "+$F{creditAccountName}+" Pos Sales No "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[$F{journalType}=="POS Sales Return Payment"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="4" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="4" width="320" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" To "+$F{debitAccountName}+" Pos Sales Return "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="448" y="4" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{journalType}=="POS Purchase Payment"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="2" width="320" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" To "+$F{debitAccountName}+" Pos Purchase No "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="2" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{journalType}=="POS Purchase Return Receipt"]]></printWhenExpression>
+			<textField>
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="0" width="244" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" From "+$F{creditAccountName}+" "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="2" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Receipt"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="3" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="77" y="2" width="245" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $F{journalType}.equals("Receipt") && $F{receiptType}!=null ? $F{receiptType} : "" )+" "+$F{journalType}+" From "+$F{creditAccountName}+" Receipt  No: "+$F{journalNO}+" Debited: "+$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{journalType}=="Payment"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="2" width="244" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" To "+$F{debitAccountName}+" Payment No "+" "+$F{journalNO}+" Credited "+$F{creditAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="447" y="2" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="18">
+			<printWhenExpression><![CDATA[$F{journalType}=="Contra"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="326" y="3" width="85" height="13">
+					<printWhenExpression><![CDATA[$F{debitCode}=="A105"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="79" y="2" width="243" height="13">
+					<printWhenExpression><![CDATA[$F{debitCode}=="A105"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["Withdrawn from "+$F{creditAccountName}+" Contra No "+$F{journalNO}+" Debited:"+$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="447" y="2" width="85" height="13">
+					<printWhenExpression><![CDATA[$F{debitCode}!="A105"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="79" y="2" width="243" height="13">
+					<printWhenExpression><![CDATA[$F{debitCode}!="A105"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["To "+$F{creditAccountName}+" Contra No "+$F{journalNO}+" Credited:"+$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="SAVINGS RECEIPT" && $F{debitCode}=="A105"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="79" y="0" width="243" height="13">
+					<printWhenExpression><![CDATA[$F{debitCode}=="A105"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" From "+$F{creditAccountName}+" Savings Receipt No : "+$F{narration}+" Debited: "+$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13">
+					<printWhenExpression><![CDATA[$F{debitCode}=="A105"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<printWhenExpression><![CDATA[$F{journalType}=="SAVINGS PAYMENT" && $F{creditCode}=="A105"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="0" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="0" width="244" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" To "+$F{debitAccountName}+" Savings Payment No: "+$F{narration}+" Credited: "+$F{creditAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="0" width="85" height="13">
+					<printWhenExpression><![CDATA[$F{creditCode}=="A105"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Cash Opening Balance"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="1" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="77" y="1" width="245" height="13">
+					<printWhenExpression><![CDATA[$F{creditAccountName}.equals("Opening Balance")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["Opening Balance :"+$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="3" width="85" height="13">
+					<printWhenExpression><![CDATA[$F{creditAccountName}.equals("Opening Balance")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="447" y="1" width="85" height="13">
+					<printWhenExpression><![CDATA[$F{debitAccountName}.equals("Opening Balance")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="77" y="1" width="245" height="13">
+					<printWhenExpression><![CDATA[$F{debitAccountName}.equals("Opening Balance")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA["Opening Balance :"+$F{creditAccountName}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{journalType}=="Cash Sales"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="6" y="1" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="77" y="1" width="245" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" from "+$F{creditAccountName}+" Sales.No "+$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="326" y="3" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="27">
+			<printWhenExpression><![CDATA[$F{journalType}=="Sales Return Payment"]]></printWhenExpression>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="7" y="2" width="60" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="78" y="2" width="370" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{journalType}+" To: "+$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="14" width="85" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{creditAmount}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="79" y="14" width="369" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{narration}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15">
+			<textField>
+				<reportElement x="402" y="2" width="71" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page:"+$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="476" y="2" width="42" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="59">
+			<staticText>
+				<reportElement x="14" y="1" width="53" height="13"/>
+				<textElement/>
+				<text><![CDATA[Summary:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="283" y="34" width="127" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{SumofDebitAmount}.compareTo( $V{SumofCreditAmount} )!=-1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SummaryDebitamount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="425" y="34" width="107" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$V{SumofDebitAmount}.compareTo( $V{SumofCreditAmount} )==-1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SummaryCreditAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="146" y="34" width="86" height="13"/>
+				<textElement/>
+				<text><![CDATA[Closing Balance:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="14" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="30" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="283" y="46" width="127" height="13">
+					<printWhenExpression><![CDATA[(($V{SummaryDebitamount} == 0) && ($V{SummaryCreditAmount} == 0) && ($P{debitSum} != 0 ))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{debitSum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="46" width="107" height="13">
+					<printWhenExpression><![CDATA[$V{SummaryDebitamount} == 0 && $V{SummaryCreditAmount} == 0 && $P{creditSum} !=0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{creditSum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="364" y="15" width="59" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Debit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="16" width="49" height="13"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Credit]]></text>
+			</staticText>
+		</band>
+	</summary>
+	<noData>
+		<band height="68">
+			<textField>
+				<reportElement x="88" y="21" width="400" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Between "+$P{FromDateJournalDate}+" To"+$P{EndJournalDate}+"No Record Found."]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

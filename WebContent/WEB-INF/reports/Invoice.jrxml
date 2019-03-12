@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="com.mycompany.NumToWords" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="425"/>
+	<scriptlet name="amountinword" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="invoiceNo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select l.address1,l.ledgerName,l.city,s.salesid,s.customerName,c.city AS city1,s.*,c.* from jewellery.ledger l right outer join jewellery.sales s on l.ledgerName=s.customerName, jewellery.companyinfo c where (formtype="Sales" or formType="Estimate Sales") and s.salesTypeId =$P{invoiceNo};]]>
+	</queryString>
+	<field name="address1" class="java.lang.String"/>
+	<field name="ledgerName" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="salesid" class="java.lang.Integer"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="city1" class="java.lang.String"/>
+	<field name="lessPercentage" class="java.math.BigDecimal"/>
+	<field name="itemCode" class="java.lang.String"/>
+	<field name="totalPieces" class="java.lang.Integer"/>
+	<field name="categoryName" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="manufacturerSeal" class="java.lang.String"/>
+	<field name="stone" class="java.lang.String"/>
+	<field name="grossWeight" class="java.math.BigDecimal"/>
+	<field name="netWeight" class="java.math.BigDecimal"/>
+	<field name="bullionRate" class="java.math.BigDecimal"/>
+	<field name="stoneRatePerCaret" class="java.math.BigDecimal"/>
+	<field name="stoneCost" class="java.math.BigDecimal"/>
+	<field name="tax" class="java.math.BigDecimal"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="salesDate" class="java.sql.Timestamp"/>
+	<field name="salesmanName" class="java.lang.String"/>
+	<field name="itemName1" class="java.lang.String"/>
+	<field name="bullionType1" class="java.lang.String"/>
+	<field name="grossWeight1" class="java.math.BigDecimal"/>
+	<field name="netWeight1" class="java.math.BigDecimal"/>
+	<field name="bullionRate1" class="java.math.BigDecimal"/>
+	<field name="stoneCost1" class="java.math.BigDecimal"/>
+	<field name="itemName2" class="java.lang.String"/>
+	<field name="bullionType2" class="java.lang.String"/>
+	<field name="grossWeight2" class="java.math.BigDecimal"/>
+	<field name="netWeight2" class="java.math.BigDecimal"/>
+	<field name="bullionRate2" class="java.math.BigDecimal"/>
+	<field name="stoneCost2" class="java.math.BigDecimal"/>
+	<field name="itemName3" class="java.lang.String"/>
+	<field name="bullionType3" class="java.lang.String"/>
+	<field name="grossWeight3" class="java.math.BigDecimal"/>
+	<field name="netWeight3" class="java.math.BigDecimal"/>
+	<field name="bullionRate3" class="java.math.BigDecimal"/>
+	<field name="stoneCost3" class="java.math.BigDecimal"/>
+	<field name="itemName4" class="java.lang.String"/>
+	<field name="bullionType4" class="java.lang.String"/>
+	<field name="grossWeight4" class="java.math.BigDecimal"/>
+	<field name="netWeight4" class="java.math.BigDecimal"/>
+	<field name="bullionRate4" class="java.math.BigDecimal"/>
+	<field name="stoneCost4" class="java.math.BigDecimal"/>
+	<field name="netAmount" class="java.math.BigDecimal"/>
+	<field name="totalAmount" class="java.math.BigDecimal"/>
+	<field name="exchangeAmount" class="java.math.BigDecimal"/>
+	<field name="billNo" class="java.lang.String"/>
+	<field name="printInvoice" class="java.lang.Boolean"/>
+	<field name="salesType" class="java.lang.String"/>
+	<field name="cashPayment" class="java.lang.String"/>
+	<field name="cardPayment" class="java.lang.String"/>
+	<field name="chequePayment" class="java.lang.String"/>
+	<field name="voucherPayment" class="java.lang.String"/>
+	<field name="billType" class="java.lang.String"/>
+	<field name="walkIn_Name" class="java.lang.String"/>
+	<field name="walkIn_City" class="java.lang.String"/>
+	<field name="bullionType" class="java.lang.String"/>
+	<field name="karatInfo" class="java.lang.String"/>
+	<field name="numberOfPieces" class="java.lang.Integer"/>
+	<field name="wastageByGrams" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount" class="java.math.BigDecimal"/>
+	<field name="mcByGrams" class="java.math.BigDecimal"/>
+	<field name="mcByAmount" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges" class="java.math.BigDecimal"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="less" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess" class="java.math.BigDecimal"/>
+	<field name="lessAmount" class="java.math.BigDecimal"/>
+	<field name="vtax" class="java.math.BigDecimal"/>
+	<field name="itemCode1" class="java.lang.String"/>
+	<field name="categoryName1" class="java.lang.String"/>
+	<field name="karatInfo1" class="java.lang.String"/>
+	<field name="numberOfPieces1" class="java.lang.Integer"/>
+	<field name="wastageByGrams1" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount1" class="java.math.BigDecimal"/>
+	<field name="mcByGrams1" class="java.math.BigDecimal"/>
+	<field name="mcByAmount1" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges1" class="java.math.BigDecimal"/>
+	<field name="stone1" class="java.lang.String"/>
+	<field name="stoneRatePerCaret1" class="java.math.BigDecimal"/>
+	<field name="amount1" class="java.math.BigDecimal"/>
+	<field name="less1" class="java.math.BigDecimal"/>
+	<field name="vtax1" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess1" class="java.math.BigDecimal"/>
+	<field name="lessPercentage1" class="java.math.BigDecimal"/>
+	<field name="lessAmount1" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal1" class="java.lang.String"/>
+	<field name="itemCode2" class="java.lang.String"/>
+	<field name="categoryName2" class="java.lang.String"/>
+	<field name="karatInfo2" class="java.lang.String"/>
+	<field name="numberOfPieces2" class="java.lang.Integer"/>
+	<field name="wastageByGrams2" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount2" class="java.math.BigDecimal"/>
+	<field name="mcByGrams2" class="java.math.BigDecimal"/>
+	<field name="mcByAmount2" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges2" class="java.math.BigDecimal"/>
+	<field name="stone2" class="java.lang.String"/>
+	<field name="stoneRatePerCaret2" class="java.math.BigDecimal"/>
+	<field name="amount2" class="java.math.BigDecimal"/>
+	<field name="less2" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess2" class="java.math.BigDecimal"/>
+	<field name="vtax2" class="java.math.BigDecimal"/>
+	<field name="lessPercentage2" class="java.math.BigDecimal"/>
+	<field name="lessAmount2" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal2" class="java.lang.String"/>
+	<field name="itemCode3" class="java.lang.String"/>
+	<field name="categoryName3" class="java.lang.String"/>
+	<field name="karatInfo3" class="java.lang.String"/>
+	<field name="numberOfPieces3" class="java.lang.Integer"/>
+	<field name="wastageByGrams3" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount3" class="java.math.BigDecimal"/>
+	<field name="mcByGrams3" class="java.math.BigDecimal"/>
+	<field name="mcByAmount3" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges3" class="java.math.BigDecimal"/>
+	<field name="stone3" class="java.lang.String"/>
+	<field name="stoneRatePerCaret3" class="java.math.BigDecimal"/>
+	<field name="amount3" class="java.math.BigDecimal"/>
+	<field name="less3" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess3" class="java.math.BigDecimal"/>
+	<field name="vtax3" class="java.math.BigDecimal"/>
+	<field name="lessPercentage3" class="java.math.BigDecimal"/>
+	<field name="lessAmount3" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal3" class="java.lang.String"/>
+	<field name="itemCode4" class="java.lang.String"/>
+	<field name="categoryName4" class="java.lang.String"/>
+	<field name="karatInfo4" class="java.lang.String"/>
+	<field name="numberOfPieces4" class="java.lang.Integer"/>
+	<field name="wastageByGrams4" class="java.math.BigDecimal"/>
+	<field name="wastageByAmount4" class="java.math.BigDecimal"/>
+	<field name="mcByGrams4" class="java.math.BigDecimal"/>
+	<field name="mcByAmount4" class="java.math.BigDecimal"/>
+	<field name="valueAdditionCharges4" class="java.math.BigDecimal"/>
+	<field name="stone4" class="java.lang.String"/>
+	<field name="stoneRatePerCaret4" class="java.math.BigDecimal"/>
+	<field name="amount4" class="java.math.BigDecimal"/>
+	<field name="less4" class="java.math.BigDecimal"/>
+	<field name="amountAfterLess4" class="java.math.BigDecimal"/>
+	<field name="vtax4" class="java.math.BigDecimal"/>
+	<field name="lessPercentage4" class="java.math.BigDecimal"/>
+	<field name="lessAmount4" class="java.math.BigDecimal"/>
+	<field name="manufacturerSeal4" class="java.lang.String"/>
+	<field name="totalLess" class="java.math.BigDecimal"/>
+	<field name="lessPerGram" class="java.math.BigDecimal"/>
+	<field name="lessOnWeight" class="java.math.BigDecimal"/>
+	<field name="billAmount" class="java.math.BigDecimal"/>
+	<field name="balanceAmount" class="java.math.BigDecimal"/>
+	<field name="adjustmentAmount" class="java.math.BigDecimal"/>
+	<field name="roundOff" class="java.math.BigDecimal"/>
+	<field name="balToPay" class="java.math.BigDecimal"/>
+	<field name="amtRecd" class="java.math.BigDecimal"/>
+	<field name="exchangeBillNo" class="java.lang.String"/>
+	<field name="cashAmount" class="java.math.BigDecimal"/>
+	<field name="chequeBank" class="java.lang.String"/>
+	<field name="chequeDetails" class="java.lang.String"/>
+	<field name="chequeAmount" class="java.math.BigDecimal"/>
+	<field name="cardBank" class="java.lang.String"/>
+	<field name="cardDetails" class="java.lang.String"/>
+	<field name="cardAmount" class="java.math.BigDecimal"/>
+	<field name="voucherList" class="java.lang.String"/>
+	<field name="voucherDetails" class="java.lang.String"/>
+	<field name="voucherAmount" class="java.math.BigDecimal"/>
+	<field name="formType" class="java.lang.String"/>
+	<field name="greetings" class="java.lang.String"/>
+	<field name="salesOrderID" class="java.lang.Integer"/>
+	<field name="salesOrderAmount" class="java.math.BigDecimal"/>
+	<field name="receiptID" class="java.lang.String"/>
+	<field name="receiptAmount" class="java.math.BigDecimal"/>
+	<field name="totalPieces1" class="java.lang.Integer"/>
+	<field name="totalPieces2" class="java.lang.Integer"/>
+	<field name="totalPieces3" class="java.lang.Integer"/>
+	<field name="totalPieces4" class="java.lang.Integer"/>
+	<field name="salesTypeId" class="java.lang.String"/>
+	<field name="SSCardNo" class="java.lang.String"/>
+	<field name="SSCardAmount" class="java.math.BigDecimal"/>
+	<field name="SSCardGrams" class="java.math.BigDecimal"/>
+	<field name="SSCardNoVal" class="java.lang.String"/>
+	<field name="commissionPercent" class="java.math.BigDecimal"/>
+	<field name="commissionAmount" class="java.math.BigDecimal"/>
+	<field name="calCardAmount" class="java.math.BigDecimal"/>
+	<field name="jewelDiscount" class="java.math.BigDecimal"/>
+	<field name="advance" class="java.math.BigDecimal"/>
+	<field name="rateFixAmount" class="java.math.BigDecimal"/>
+	<field name="rateFixGrams" class="java.math.BigDecimal"/>
+	<field name="rateFixDifferenceAmount" class="java.math.BigDecimal"/>
+	<field name="boardRateSO" class="java.math.BigDecimal"/>
+	<field name="salesReturnId" class="java.lang.String"/>
+	<field name="paymentMode" class="java.lang.String"/>
+	<field name="salesReturnStatus" class="java.lang.String"/>
+	<field name="salesReturnAmount" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges1" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges2" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges3" class="java.math.BigDecimal"/>
+	<field name="salesHMCharges4" class="java.math.BigDecimal"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="reference" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="companyAddress" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="tinNumber" class="java.lang.String"/>
+	<field name="CSTNumber" class="java.lang.String"/>
+	<field name="c_email" class="java.lang.String"/>
+	<field name="posBarcodePrint" class="java.lang.String"/>
+	<field name="posInvoicePrint" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<field name="ornBarcodePrint" class="java.lang.String"/>
+	<field name="ornInvoicePrint" class="java.lang.String"/>
+	<variable name="netWeight_1" class="java.lang.Float" resetType="Group" resetGroup="Totalwt" calculation="Sum">
+		<variableExpression><![CDATA[$F{netWeight}]]></variableExpression>
+	</variable>
+	<variable name="amount_1" class="java.lang.Float" resetType="Group" resetGroup="Totalwt" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<variable name="BalAmt" class="java.lang.String"/>
+	<variable name="MC" class="java.lang.String"/>
+	<variable name="less_1" class="java.lang.Float" resetType="Group" resetGroup="Totalwt" calculation="Sum">
+		<variableExpression><![CDATA[$F{less}]]></variableExpression>
+	</variable>
+	<variable name="Date" class="java.lang.String"/>
+	<variable name="Rate" class="java.lang.Float">
+		<initialValueExpression><![CDATA[$F{bullionRate}]]></initialValueExpression>
+	</variable>
+	<variable name="Pieces1" class="java.lang.String">
+		<variableExpression><![CDATA[($F{itemCode}.equals("it100011") ? 1 : $F{totalPieces})]]></variableExpression>
+	</variable>
+	<variable name="tempVaRate" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{wastageByGrams} * $F{bullionRate}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="VaRate" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( ($V{tempVaRate}!=null && $V{tempVaRate}!=0) ? $V{tempVaRate} / $F{grossWeight}  : 0)]]></variableExpression>
+	</variable>
+	<variable name="tempVaRate1" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{wastageByGrams1} * $F{bullionRate1}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="VaRate1" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( ($V{tempVaRate1}!=null && $V{tempVaRate1}!=0) ? $V{tempVaRate1} / $F{grossWeight1}  : 0)]]></variableExpression>
+	</variable>
+	<variable name="tempVaRate2" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{wastageByGrams2} * $F{bullionRate2}]]></variableExpression>
+	</variable>
+	<variable name="VaRate2" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( ($V{tempVaRate2}!=null && $V{tempVaRate2}!=0) ? $V{tempVaRate2} / $F{grossWeight2}  : 0)]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="tempVaRate3" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{wastageByGrams3} * $F{bullionRate3}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="VaRate3" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( ($V{tempVaRate3}!=null && $V{tempVaRate3}!=0) ? $V{tempVaRate3} / $F{grossWeight3}  : 0)]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="tempVaRate4" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{wastageByGrams4} * $F{bullionRate4}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="VaRate4" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( ($V{tempVaRate4}!=null && $V{tempVaRate4}!=0) ? $V{tempVaRate4} / $F{grossWeight4}  : 0)]]></variableExpression>
+	</variable>
+	<variable name="VaTotalRate2" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[((( $V{VaRate2} != null && $V{VaRate2}!= 0) ? $V{VaRate2}.divide( $F{grossWeight2} ) :0.00 ))]]></variableExpression>
+	</variable>
+	<group name="Totalwt">
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="13">
+				<staticText>
+					<reportElement x="332" y="0" width="68" height="13"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Sub Total]]></text>
+				</staticText>
+				<line>
+					<reportElement x="3" y="0" width="530" height="1"/>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{tax}!=0.00]]></printWhenExpression>
+				<staticText>
+					<reportElement x="327" y="0" width="73" height="13"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[TNVAT  (1%)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<staticText>
+					<reportElement x="326" y="0" width="75" height="13"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Net Amount]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{billAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{salesOrderAmount}!=0.00]]></printWhenExpression>
+				<textField>
+					<reportElement x="220" y="0" width="181" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA["Sal.Order Advance No:"+$F{salesOrderID}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{salesOrderAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{exchangeAmount}!=0.00]]></printWhenExpression>
+				<textField>
+					<reportElement x="191" y="0" width="210" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA["Exchange Purchase No:"+$F{exchangeBillNo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{exchangeAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{SSCardAmount}!=0.00]]></printWhenExpression>
+				<textField>
+					<reportElement x="201" y="0" width="199" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA["Saving Scheme Card No:"+$F{SSCardNoVal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{SSCardAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{jewelDiscount}!=0.00]]></printWhenExpression>
+				<staticText>
+					<reportElement x="300" y="0" width="100" height="13"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Scheme Discount]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{jewelDiscount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="14">
+				<printWhenExpression><![CDATA[$F{cashAmount}!=0.00]]></printWhenExpression>
+				<staticText>
+					<reportElement x="300" y="0" width="100" height="13"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Received Cash]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="405" y="0" width="115" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{cashAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{calCardAmount}!=0.00]]></printWhenExpression>
+				<textField>
+					<reportElement x="125" y="0" width="276" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA["Amount Received In Card:"+$F{cardDetails}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="405" y="0" width="114" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{calCardAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{chequeAmount}!=0.00]]></printWhenExpression>
+				<textField>
+					<reportElement x="128" y="0" width="272" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA["Amount Received In Cheque:"+$F{chequeDetails}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="405" y="0" width="113" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{chequeAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{voucherAmount}!=0.00]]></printWhenExpression>
+				<textField>
+					<reportElement x="125" y="0" width="276" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA["Amount Received In Voucher:"+$F{voucherDetails}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="405" y="0" width="113" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{voucherAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="13">
+				<printWhenExpression><![CDATA[$F{balToPay}!=0.00]]></printWhenExpression>
+				<staticText>
+					<reportElement x="301" y="0" width="100" height="13"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Balance Amount]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="405" y="0" width="114" height="13"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{balToPay}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="16">
+				<textField isBlankWhenNull="true">
+					<reportElement x="6" y="2" width="547" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[""+$P{REPORT_SCRIPTLET}.convert($F{billAmount})]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="2" y="2" width="530" height="1"/>
+				</line>
+				<line>
+					<reportElement x="2" y="14" width="530" height="1"/>
+				</line>
+			</band>
+			<band height="69">
+				<staticText>
+					<reportElement x="5" y="1" width="100" height="12"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Declaration:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="12" width="278" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[1. Goods once sold cannot be taken back]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="337" y="14" width="216" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA["For "+$F{companyName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="6" y="55" width="104" height="13"/>
+					<textElement/>
+					<text><![CDATA[Customer's Signature]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="357" y="55" width="114" height="13"/>
+					<textElement/>
+					<text><![CDATA[Authorised Signature]]></text>
+				</staticText>
+				<line>
+					<reportElement x="4" y="68" width="530" height="1"/>
+				</line>
+				<staticText>
+					<reportElement x="5" y="24" width="278" height="12"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[2. Goods received in good condition]]></text>
+				</staticText>
+			</band>
+			<band height="13">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="11" y="0" width="527" height="13"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{greetings}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="73">
+			<rectangle radius="10">
+				<reportElement x="1" y="-16" width="537" height="89" forecolor="#000000"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="393" y="8" width="124" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["TIN:"+$F{tinNumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="-6" width="376" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="9" width="374" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="29" width="331" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{city1}+"-"+$F{pincode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="49" width="258" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Ph:"+$F{phone}+","+"Fax:"+$F{fax}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="396" y="30" width="100" height="13">
+					<printWhenExpression><![CDATA[$F{balToPay}==0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[CASH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="30" width="99" height="13">
+					<printWhenExpression><![CDATA[$F{balToPay}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[CREDIT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="93">
+			<rectangle radius="10">
+				<reportElement x="1" y="18" width="537" height="75"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="5" y="23" width="95" height="15" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[( $F{customerName}.equals("walk_in") ? !$F{walkIn_Name}.equals("") : !$F{customerName}.equals(""))]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Customer Name :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="102" y="24" width="274" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $F{customerName}.equals("walk_in") ?$F{walkIn_Name} : $F{customerName})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="6" y="53" width="48" height="15" backcolor="#FFFFFF">
+					<printWhenExpression><![CDATA[( $F{customerName}.equals("walk_in") ?!$F{walkIn_City}.equals("") : !$F{address1}.equals(""))]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Address :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="387" y="24" width="41" height="15" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bill No :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="433" y="24" width="73" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{salesTypeId}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="388" y="41" width="40" height="15" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Date   :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="54" y="53" width="322" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $F{customerName}.equals("walk_in") ?$F{walkIn_City}: $F{address1})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="55" y="73" width="257" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="432" y="43" width="100" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="2" width="106" height="15"/>
+				<textElement/>
+				<text><![CDATA[ORIGINAL //COPY]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="3" y="4" width="107" height="15" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[           DESCRIPTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="175" y="5" width="39" height="15" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[GRS.WT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="252" y="5" width="39" height="15" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NET.WT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="313" y="5" width="39" height="14" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="377" y="6" width="41" height="14" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[VA RATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="453" y="5" width="67" height="14" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Immediate"/>
+		<band height="15">
+			<line>
+				<reportElement x="2" y="0" width="530" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="1" width="94" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{categoryName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="0" width="50" height="13">
+					<printWhenExpression><![CDATA[$F{manufacturerSeal}!="NON Kdm"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{manufacturerSeal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="239" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="1" width="52" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bullionRate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="375" y="-1" width="53" height="15">
+					<printWhenExpression><![CDATA[$V{VaRate}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{VaRate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="1" width="86" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amountAfterLess}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{grossWeight1}!=0.000]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="0" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{categoryName1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="0" width="50" height="13">
+					<printWhenExpression><![CDATA[$F{manufacturerSeal1}!="NON Kdm"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{manufacturerSeal1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="239" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="1" width="52" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bullionRate1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="1" width="86" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amountAfterLess1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="375" y="0" width="53" height="15">
+					<printWhenExpression><![CDATA[$V{VaRate1}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{VaRate1}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{grossWeight2}!=0.000]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="0" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{categoryName2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="0" width="50" height="13">
+					<printWhenExpression><![CDATA[$F{manufacturerSeal2}!="NON Kdm"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{manufacturerSeal2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="1" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="312" y="0" width="50" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bullionRate2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="375" y="1" width="53" height="14">
+					<printWhenExpression><![CDATA[$V{VaRate2}!=""]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{VaRate2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="0" width="86" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amountAfterLess3}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{grossWeight3}!=0.000]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="0" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{categoryName3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="0" width="50" height="13">
+					<printWhenExpression><![CDATA[$F{manufacturerSeal3}!="NON Kdm"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{manufacturerSeal3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="0" width="51" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bullionRate3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="375" y="0" width="53" height="15">
+					<printWhenExpression><![CDATA[$V{VaRate3}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{VaRate3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="0" width="86" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amountAfterLess2}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<printWhenExpression><![CDATA[$F{grossWeight4}!=0.000]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="4" y="0" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{categoryName4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="0" width="50" height="13">
+					<printWhenExpression><![CDATA[$F{manufacturerSeal4}!="NON Kdm"]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{manufacturerSeal4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="240" y="0" width="60" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{grossWeight4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="0" width="51" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{bullionRate4}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="375" y="1" width="53" height="13">
+					<printWhenExpression><![CDATA[$V{VaRate4}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{VaRate4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="1" width="86" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amountAfterLess4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="1" y="1" width="501" height="16" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="502" y="1" width="52" height="16" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="43" y="15" width="429" height="20"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Your selection has returned no results.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

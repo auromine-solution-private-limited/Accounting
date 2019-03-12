@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptVoucher" language="groovy" pageWidth="356" pageHeight="577" columnWidth="316" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="com.mycompany.NumToWords" isIgnorePagination="true">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<scriptlet name="wordinnumber" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="voucherId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT l.address1 as ledgerAddress1,l.address2 as ledgerAddress2,l.ledgerName,l.city as ledgerCity,l.pinCode as ledgerPinCode,l.panNumber as ledgerPanNumber, l.accountGroup, j.*, c.city as companyCity, c.pincode as companyPincode, c.* FROM  ledger l RIGHT OUTER JOIN journal j on l.ledgerName = j.debitAccountName , companyinfo c where journalNO=$P{voucherId} and journalType="Payment"]]>
+	</queryString>
+	<field name="ledgerAddress1" class="java.lang.String"/>
+	<field name="ledgerAddress2" class="java.lang.String"/>
+	<field name="ledgerName" class="java.lang.String"/>
+	<field name="ledgerCity" class="java.lang.String"/>
+	<field name="ledgerPinCode" class="java.lang.String"/>
+	<field name="ledgerPanNumber" class="java.lang.String"/>
+	<field name="accountGroup" class="java.lang.String"/>
+	<field name="journalId" class="java.lang.Integer"/>
+	<field name="debitAmount" class="java.math.BigDecimal"/>
+	<field name="creditAmount" class="java.math.BigDecimal"/>
+	<field name="transactionId" class="java.lang.String"/>
+	<field name="debitAccountName" class="java.lang.String"/>
+	<field name="creditAccountName" class="java.lang.String"/>
+	<field name="journalDate" class="java.sql.Timestamp"/>
+	<field name="journalType" class="java.lang.String"/>
+	<field name="receiptType" class="java.lang.String"/>
+	<field name="creditCode" class="java.lang.String"/>
+	<field name="journalNO" class="java.lang.String"/>
+	<field name="narration" class="java.lang.String"/>
+	<field name="debitCode" class="java.lang.String"/>
+	<field name="companyCity" class="java.lang.String"/>
+	<field name="companyPincode" class="java.lang.String"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="reference" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<field name="tinNumber" class="java.lang.String"/>
+	<field name="CSTNumber" class="java.lang.String"/>
+	<field name="c_email" class="java.lang.String"/>
+	<field name="companyAddress" class="java.lang.String"/>
+	<field name="posBarcodePrint" class="java.lang.String"/>
+	<field name="posInvoicePrint" class="java.lang.String"/>
+	<field name="ornBarcodePrint" class="java.lang.String"/>
+	<field name="ornInvoicePrint" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="73">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="255" y="17" width="56" height="12">
+					<printWhenExpression><![CDATA[$F{tinNumber}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tinNumber}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="1" y="16" width="313" height="45"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="17" width="189" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="47" y="48" width="94" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="218" y="17" width="36" height="12">
+					<printWhenExpression><![CDATA[$F{tinNumber}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tin No:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="218" y="29" width="93" height="12"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ORIGINAL/COPY"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="48" width="40" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{phone} != ""]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone : ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="102">
+			<staticText>
+				<reportElement x="3" y="1" width="26" height="12"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[From,]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="1" width="126" height="12"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="251" y="46" width="63" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{debitAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="212" y="46" width="40" height="12"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AMOUNT: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="47" width="82" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PAYMENT MADE TO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="1" width="55" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment No : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="14" width="27" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Date : ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="249" y="14" width="65" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{journalDate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="45" width="311" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="91" y="46" width="121" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="89" width="121" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="79" width="304" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(Rupees : "+$P{REPORT_SCRIPTLET}.convert($F{debitAmount})+" ONLY)"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="13" width="126" height="12"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledgerAddress1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="35" width="126" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledgerPanNumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="39" y="24" width="126" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{ledgerCity}!=""]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledgerCity}
+]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="101" width="311" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="58" width="137" height="12"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$F{accountGroup}+")"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="83" y="-75" width="169" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PAYMENT VOUCHER"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="-36" width="170" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyCity}+" "+$F{companyPincode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="-47" width="189" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyAddress}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="250" y="1" width="60" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{journalNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="24">
+			<line>
+				<reportElement x="1" y="-1" width="311" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="181" y="12" width="133" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["For "+$F{companyName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="12" width="131" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUSTOMER/DEALER SIGNATURE ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

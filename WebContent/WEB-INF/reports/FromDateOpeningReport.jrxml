@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FromDateOpeningReport" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FromDateJournalDate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+(SELECT SUM(Journal.debitAmount) FROM Journal INNER JOIN Ledger ON Journal.debitAccountName = Ledger.ledgerName WHERE Journal.journalDate < str_to_date($P{FromDateJournalDate},'%d/%m/%Y') AND Ledger.accountGroup='Cash Account') as
+Op_Debit_Bal,
+
+(SELECT SUM(Journal.creditAmount) FROM Journal INNER JOIN Ledger ON Journal.creditAccountName = Ledger.ledgerName WHERE Journal.journalDate < str_to_date($P{FromDateJournalDate},'%d/%m/%Y') AND Ledger.accountGroup='Cash Account') as Op_Credit_Bal]]>
+	</queryString>
+	<field name="Op_Debit_Bal" class="java.math.BigDecimal"/>
+	<field name="Op_Credit_Bal" class="java.math.BigDecimal"/>
+	<variable name="CONVERT_CONSTANT" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[-1]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="Op_Debit_Val" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($F{Op_Debit_Bal} == null ? 0.00 : $F{Op_Debit_Bal} )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="Op_Credit_Val" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($F{Op_Credit_Bal} == null ? 0.00 : $F{Op_Credit_Bal} )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="SubtractedValue" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{Op_Debit_Val}.subtract( $V{Op_Credit_Val} )]]></variableExpression>
+	</variable>
+	<variable name="SubtractedFinalVal" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( $V{SubtractedValue} < 0 ? ( $V{SubtractedValue}.multiply( $V{CONVERT_CONSTANT} )): $V{SubtractedValue} )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="DayOpeningBalDebitVal" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( ( $V{Op_Debit_Val}.compareTo( $V{Op_Credit_Val} ) != -1 ) ? $V{SubtractedFinalVal} : 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="DayOpeningBalCreditVal" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[( ($V{Op_Debit_Val}.compareTo($V{Op_Credit_Val}) == -1) ? $V{SubtractedFinalVal}: 0.00 )]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="4" y="3" width="80" height="13"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{FromDateJournalDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="84" y="3" width="182" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Opening Balance As On : "+$P{FromDateJournalDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="278" y="3" width="129" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{DayOpeningBalDebitVal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="407" y="3" width="138" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{DayOpeningBalCreditVal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

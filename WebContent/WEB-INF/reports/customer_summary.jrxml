@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="customer_summary" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM `ledger` l WHERE accountGroup = 'Sundry Debtors']]>
+	</queryString>
+	<field name="ledgerId" class="java.lang.Integer"/>
+	<field name="accountGroupCode" class="java.lang.String"/>
+	<field name="accountGroup" class="java.lang.String"/>
+	<field name="ledgerName" class="java.lang.String"/>
+	<field name="ledgerDate" class="java.sql.Timestamp"/>
+	<field name="openingType" class="java.lang.String"/>
+	<field name="opGoldType" class="java.lang.String"/>
+	<field name="opSilverType" class="java.lang.String"/>
+	<field name="opTotalType" class="java.lang.String"/>
+	<field name="closingTotalType" class="java.lang.String"/>
+	<field name="clGoldType" class="java.lang.String"/>
+	<field name="clSilverType" class="java.lang.String"/>
+	<field name="primaryPhone" class="java.lang.String"/>
+	<field name="alternatePhone" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="cast" class="java.lang.String"/>
+	<field name="cstNumber" class="java.lang.String"/>
+	<field name="serviceTaxNumber" class="java.lang.String"/>
+	<field name="panNumber" class="java.lang.String"/>
+	<field name="vatNumber" class="java.lang.String"/>
+	<field name="address1" class="java.lang.String"/>
+	<field name="address2" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pincode" class="java.lang.String"/>
+	<field name="typeOfSource" class="java.lang.String"/>
+	<field name="openingBalance" class="java.math.BigDecimal"/>
+	<field name="opGoldBalance" class="java.math.BigDecimal"/>
+	<field name="opSilverBalance" class="java.math.BigDecimal"/>
+	<field name="opTotalBalance" class="java.math.BigDecimal"/>
+	<field name="closingTotalBalance" class="java.math.BigDecimal"/>
+	<field name="clGoldBalance" class="java.math.BigDecimal"/>
+	<field name="clSilverBalance" class="java.math.BigDecimal"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
+	<field name="source" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Customer Summary ]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="34" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="36" y="0" width="117" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="154" y="0" width="123" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OpeningBalance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="279" y="0" width="95" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OpeningType]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="375" y="0" width="110" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ClosingBalance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="486" y="0" width="90" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ClosingType]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="3" y="1" width="32" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="36" y="0" width="117" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ledgerName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="154" y="1" width="123" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{opTotalBalance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="279" y="1" width="95" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{opTotalType}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="486" y="1" width="67" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{closingTotalType}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="375" y="1" width="110" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{closingTotalBalance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="39">
+			<textField>
+				<reportElement mode="Opaque" x="1" y="24" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="516" y="24" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="2" y="24" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="17" y="11" width="481" height="32" forecolor="#FF0033"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[                      There is No Data To Display]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

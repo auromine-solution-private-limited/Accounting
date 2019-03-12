@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cardwiseschemeDetails" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="schemeName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT s.schemeName, s.schemeStartDate,s.saving_schemeId, c.start_schemeId,c.cardNo,c.customerName,c.schemeName,c.schemeInAmount,c.schemeInGrams,c.installment,c.dateOfJoining,c.openingBalanceInRs,c.closingBalanceInRs,c.openingBalanceInGrams,c.closingBalanceInGrams,c.status,c.start_schemeId,c.schemeType
+FROM startscheme s
+INNER JOIN cardissue c ON s.saving_schemeId = c.start_schemeId
+WHERE s.schemeName=$P{schemeName}; ]]>
+	</queryString>
+	<field name="schemeName" class="java.lang.String"/>
+	<field name="schemeStartDate" class="java.sql.Timestamp"/>
+	<field name="saving_schemeId" class="java.lang.Integer"/>
+	<field name="start_schemeId" class="java.lang.Integer"/>
+	<field name="cardNo" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="schemeInAmount" class="java.math.BigDecimal"/>
+	<field name="schemeInGrams" class="java.math.BigDecimal"/>
+	<field name="installment" class="java.lang.Integer"/>
+	<field name="dateOfJoining" class="java.sql.Timestamp"/>
+	<field name="openingBalanceInRs" class="java.math.BigDecimal"/>
+	<field name="closingBalanceInRs" class="java.math.BigDecimal"/>
+	<field name="openingBalanceInGrams" class="java.math.BigDecimal"/>
+	<field name="closingBalanceInGrams" class="java.math.BigDecimal"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="schemeType" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="151" y="6" width="254" height="20"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scheme wise Card Details Register]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="27" width="552" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="0" width="181" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["SchemeName:"+$F{schemeName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="187" y="1" width="169" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Schemetype:"+$F{schemeType}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="367" y="1" width="144" height="13">
+					<printWhenExpression><![CDATA[$F{schemeType}=="Amount"]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Scheme Amount:"+$F{schemeInAmount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="1" width="138" height="13">
+					<printWhenExpression><![CDATA[$F{schemeInGrams}!=0.000]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Scheme Grams:"+$F{schemeInGrams}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="14" width="552" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="1" width="42" height="13"/>
+				<textElement/>
+				<text><![CDATA[Card No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="1" width="80" height="13"/>
+				<textElement/>
+				<text><![CDATA[Customer Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="1" width="89" height="13"/>
+				<textElement/>
+				<text><![CDATA[No Of Installment:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="1" width="109" height="13">
+					<printWhenExpression><![CDATA[$F{closingBalanceInRs}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[Closing balance in Rs:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="1" width="128" height="13">
+					<printWhenExpression><![CDATA[$F{closingBalanceInGrams}!=0.000]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[Closing balance in Grams:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="3" width="64" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Joining Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="508" y="2" width="30" height="13"/>
+				<textElement/>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="17" width="552" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="70" y="1" width="72" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="1" width="41" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cardNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="160" y="1" width="61" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{installment}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="249" y="2" width="84" height="13">
+					<printWhenExpression><![CDATA[$F{closingBalanceInRs}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{closingBalanceInRs}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement x="403" y="2" width="81" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dateOfJoining}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="507" y="2" width="43" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="265" y="0" width="67" height="13">
+					<printWhenExpression><![CDATA[$F{closingBalanceInGrams}!=0.000]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{closingBalanceInGrams}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15">
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="422" y="1" width="23" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="446" y="1" width="62" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="151" y="22" width="308" height="20"/>
+				<textElement/>
+				<text><![CDATA[No Data Found For The Given Scheme name...]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

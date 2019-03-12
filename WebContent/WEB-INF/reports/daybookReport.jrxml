@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="daybookReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="288"/>
+	<parameter name="fromDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     journal.`journalId` AS journal_journalId,
+     journal.`journalNO` AS journal_journalNO,
+     journal.`narration` AS journal_narration,
+     journal.`creditCode` AS journal_creditId,
+     journal.`debitCode` AS journal_debitId,
+     journal.`transactionId` AS journal_transactionId,
+     journal.`debitAccountName` AS journal_debitAccountName,
+     journal.`creditAccountName` AS journal_creditAccountName,
+     journal.`journalDate` AS journal_journalDate,
+     journal.`journalType` AS journal_journalType,
+     journal.`debitAmount` AS journal_debitAmount,
+     journal.`creditAmount` AS journal_creditAmount,
+     journal.`receiptType` AS journal_receiptType,
+     companyinfo.`companyName` AS companyinfo_companyName,
+     companyinfo.`reference` AS companyinfo_reference,
+     companyinfo.`website` AS companyinfo_website,
+     companyinfo.`panNumber` AS companyinfo_panNumber,
+     companyinfo.`city` AS companyinfo_city,
+     companyinfo.`pincode` AS companyinfo_pincode,
+     companyinfo.`companyAddress` AS companyinfo_companyAddress,
+     companyinfo.`phone` AS companyinfo_phone,
+     companyinfo.`fax` AS companyinfo_fax,
+     companyinfo.`tinNumber` AS companyinfo_tinNumber,
+     companyinfo.`CSTNumber` AS companyinfo_CSTNumber,
+     companyinfo.`c_email` AS companyinfo_c_email,
+     companyinfo.`country` AS companyinfo_country
+FROM
+     `journal` journal,
+     `companyinfo` companyinfo
+WHERE
+     journal.`journalDate` >=str_to_date($P{fromDate},'%d/%m/%Y')
+ AND journal.`journalDate`<=str_to_date($P{toDate},'%d/%m/%Y') order by journaltype]]>
+	</queryString>
+	<field name="journal_journalId" class="java.lang.Integer"/>
+	<field name="journal_journalNO" class="java.lang.String"/>
+	<field name="journal_narration" class="java.lang.String"/>
+	<field name="journal_creditId" class="java.lang.String"/>
+	<field name="journal_debitId" class="java.lang.String"/>
+	<field name="journal_transactionId" class="java.lang.String"/>
+	<field name="journal_debitAccountName" class="java.lang.String"/>
+	<field name="journal_creditAccountName" class="java.lang.String"/>
+	<field name="journal_journalDate" class="java.sql.Timestamp"/>
+	<field name="journal_journalType" class="java.lang.String"/>
+	<field name="journal_debitAmount" class="java.math.BigDecimal"/>
+	<field name="journal_creditAmount" class="java.math.BigDecimal"/>
+	<field name="journal_receiptType" class="java.lang.String"/>
+	<field name="companyinfo_companyName" class="java.lang.String"/>
+	<field name="companyinfo_reference" class="java.lang.String"/>
+	<field name="companyinfo_website" class="java.lang.String"/>
+	<field name="companyinfo_panNumber" class="java.lang.String"/>
+	<field name="companyinfo_city" class="java.lang.String"/>
+	<field name="companyinfo_pincode" class="java.lang.String"/>
+	<field name="companyinfo_companyAddress" class="java.lang.String"/>
+	<field name="companyinfo_phone" class="java.lang.String"/>
+	<field name="companyinfo_fax" class="java.lang.String"/>
+	<field name="companyinfo_tinNumber" class="java.lang.String"/>
+	<field name="companyinfo_CSTNumber" class="java.lang.String"/>
+	<field name="companyinfo_c_email" class="java.lang.String"/>
+	<field name="companyinfo_country" class="java.lang.String"/>
+	<variable name="totpurAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Purchase" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("Purchase") ? $F{journal_debitAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totSOAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="SalesOrder Receipt" calculation="Sum">
+		<variableExpression><![CDATA[$F{journal_creditAmount}]]></variableExpression>
+	</variable>
+	<variable name="totPRAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Purchase Return" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("Purchase Return") ? $F{journal_creditAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totOSAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Ornamental Sales" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("Sales") ? $F{journal_creditAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totOSRAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Sales Return" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("Sales Return") ? $F{journal_debitAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totBSAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Bullion Sales" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("Bullion Sales") ? $F{journal_creditAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totPOSAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="POS Sales" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("POS Sales Account") ? $F{journal_creditAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totPOSRAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="POS Sales Return" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("POS Sales Return") ? $F{journal_debitAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totPOSPAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="POS Purchase" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("POS Purchase") ? $F{journal_debitAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totPOSPRAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="POS Purchase Return" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("POS Purchase Return") ? $F{journal_creditAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="Receipt" class="java.math.BigDecimal" resetType="Group" resetGroup="Receipt" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("Receipt") ? $F{journal_creditAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totSSRAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Saving Receipt" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("SAVINGS RECEIPT") ? $F{journal_creditAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totSSPAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Saving Payment" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("SAVINGS PAYMENT") ? $F{journal_debitAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<variable name="totPayment" class="java.math.BigDecimal" resetType="Group" resetGroup="Payment" calculation="Sum">
+		<variableExpression><![CDATA[( $F{journal_journalType}.equals("Payment") ? $F{journal_debitAmount} : 0.00 )]]></variableExpression>
+	</variable>
+	<group name="SalesOrder Receipt">
+		<groupExpression><![CDATA[$F{journal_journalType}.equals("Sales Order Cash Receipt") ||
+ $F{journal_journalType}.equals( "Sales Order Cheque Receipt" ) ||
+ $F{journal_journalType}.equals( "Sales Order Card Receipt" ) ||
+ $F{journal_journalType}.equals( "Sales Order Voucher Receipt" )]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}.equals("Sales Order Cash Receipt") ||
+ $F{journal_journalType}.equals( "Sales Order Cheque Receipt" ) ||
+ $F{journal_journalType}.equals( "Sales Order Card Receipt" ) ||
+ $F{journal_journalType}.equals( "Sales Order Voucher Receipt" )]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="1" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="56" y="0" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Sales Order Receipt]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="156" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_narration}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}.equals("Sales Order Cash Receipt") ||
+ $F{journal_journalType}.equals( "Sales Order Cheque Receipt" ) ||
+ $F{journal_journalType}.equals( "Sales Order Card Receipt" ) ||
+ $F{journal_journalType}.equals( "Sales Order Voucher Receipt" )]]></printWhenExpression>
+				<textField>
+					<reportElement x="256" y="0" width="123" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_creditAccountName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="465" y="0" width="80" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totSOAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Purchase">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Purchase"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="0" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="56" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Purchase]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}.equals("Purchase")]]></printWhenExpression>
+				<staticText>
+					<reportElement x="256" y="0" width="123" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total Purchase Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="379" y="0" width="61" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totpurAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Purchase Return">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Purchase Return"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="0" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="56" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Purchase Return]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Purchase Return"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="142" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Total Purchase Return Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="466" y="0" width="79" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totPRAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Ornamental Sales">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Sales"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="1" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="57" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Ornamental Sales]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="142" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Total Ornamental sales Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="466" y="0" width="79" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totOSAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Sales Return">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Sales Return"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="57" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Sales Return]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="1" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Sales Return"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="142" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Total Sales Return Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="384" y="0" width="56" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totOSRAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Bullion Sales">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Bullion Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="57" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Bullion Sales]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="1" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Bullion Sales"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="256" y="0" width="123" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total Bullion Sales Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="466" y="0" width="79" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totBSAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="POS Sales">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Sales Account"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="1" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="57" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[POS Sales]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Sales Account"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="261" y="0" width="123" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total POS Sales Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="466" y="0" width="79" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totPOSAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="POS Sales Return">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Sales Return"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="1" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="57" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[POS Sales Return]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Sales Return"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="147" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total POS Sales Return Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="379" y="0" width="61" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totPOSRAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="POS Purchase">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Purchase"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="2" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="58" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[POS Purchase]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Purchase"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="147" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total POS Purchase Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="379" y="0" width="61" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totPOSPAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="POS Purchase Return">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Purchase Return"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="58" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[POS Purchase Return]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="2" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="POS Purchase Return"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="222" y="0" width="162" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total POS Purchase Return Value]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="466" y="0" width="79" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totPOSPRAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Receipt">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Receipt"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="3" y="0" width="55" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="0" width="98" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalType}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="158" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalNO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Receipt"]]></printWhenExpression>
+				<textField>
+					<reportElement x="279" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_creditAccountName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="466" y="0" width="78" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{Receipt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Saving Receipt">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="SAVINGS RECEIPT"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="0" y="0" width="58" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="0" width="98" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalType}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="SAVINGS RECEIPT"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="119" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Total Savings Receipts]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="465" y="0" width="79" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totSSRAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Saving Payment">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="SAVINGS PAYMENT"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="-1" y="0" width="59" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="55" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalType}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="SAVINGS PAYMENT"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="119" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Total Savings payment]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="364" y="0" width="85" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$V{totSSPAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Payment">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Payment"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="-1" y="0" width="59" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="0" width="97" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalType}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Payment"]]></printWhenExpression>
+				<staticText>
+					<reportElement x="237" y="0" width="118" height="20"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Total Payment Amount]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="355" y="0" width="94" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{totPayment}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Contra">
+		<groupExpression><![CDATA[$F{journal_journalNO}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Contra"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="-1" y="0" width="59" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="0" width="97" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalType}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="156" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalNO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="258" y="0" width="121" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_debitAccountName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="379" y="0" width="61" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{journal_debitAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="S.Journal">
+		<groupExpression><![CDATA[$F{journal_narration}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="S.Journal"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="-1" y="0" width="59" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="58" y="0" width="97" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalType}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="155" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_narration}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="258" y="0" width="106" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_debitAccountName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="364" y="0" width="76" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{journal_debitAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Journal">
+		<groupExpression><![CDATA[$F{journal_journalType}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{journal_journalType}=="Journal"]]></printWhenExpression>
+				<textField pattern="dd/MM/yy">
+					<reportElement x="-1" y="0" width="56" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="55" y="0" width="97" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalType}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="157" y="0" width="101" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_journalNO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="261" y="0" width="103" height="20"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{journal_debitAccountName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="364" y="0" width="76" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{journal_debitAmount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="228" y="0" width="142" height="22" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Day Book-Single]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="85" splitType="Stretch">
+			<textField>
+				<reportElement x="-1" y="0" width="342" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{companyinfo_companyName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="35" width="256" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{companyinfo_city}+" - "+$F{companyinfo_pincode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="63" width="56" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[From Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="63" width="44" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[To Date:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="84" width="555" height="1" forecolor="#666666"/>
+			</line>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="483" y="63" width="70" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{toDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="53" y="63" width="63" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{fromDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="20" width="371" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{companyinfo_companyAddress}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="256" y="0" width="123" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[PARTICULARS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VOUCHER NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="0" width="79" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[CREDIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="0" width="97" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DEBIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="1" width="55" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="555" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement x="65" y="1" width="79" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[VOUCHER TYPE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<printWhenExpression><![CDATA[$F{journal_journalType}=="Revenue" || $F{journal_journalType}=="Expense"]]></printWhenExpression>
+			<staticText>
+				<reportElement x="58" y="0" width="94" height="20">
+					<printWhenExpression><![CDATA[$F{journal_journalType}=="Revenue"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[JRI journal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="0" width="96" height="20">
+					<printWhenExpression><![CDATA[$F{journal_journalType}=="Expense"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[JRE journal]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="398" y="0" width="42" height="20">
+					<printWhenExpression><![CDATA[$F{journal_journalType}=="Revenue"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{journal_debitAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{journal_debitAccountName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="474" y="0" width="70" height="20">
+					<printWhenExpression><![CDATA[$F{journal_journalType}=="Expense"]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{journal_creditAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{journal_creditAccountName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="1" y="3" width="503" height="13" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="504" y="2" width="50" height="13" backcolor="#FFFFFF"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="46">
+			<staticText>
+				<reportElement x="77" y="3" width="397" height="43"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No Data Found]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

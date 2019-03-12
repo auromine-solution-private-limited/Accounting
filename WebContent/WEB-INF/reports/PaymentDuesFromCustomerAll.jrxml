@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentDuesFromCustomerAll" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tillDate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT period_diff(date_format(str_to_date($P{tillDate},'%d/%m/%Y'), '%Y%m'), date_format(ss.schemeStartDate, '%Y%m')) as noOfMonths,
+
+if(period_diff(date_format(str_to_date($P{tillDate},'%d/%m/%Y'), '%Y%m'), date_format(ss.schemeStartDate, '%Y%m')) < ss.schemeDuration, (period_diff(date_format(str_to_date($P{tillDate},'%d/%m/%Y'), '%Y%m'), date_format(ss.schemeStartDate, '%Y%m'))-installment), ss.schemeDuration-installment) as dueInstallment,
+
+ss.schemeDuration, cc.installment, cc.cardNo, cc.customerName, ss.schemeType, ss.schemeInAmount, ss.SchemeInGrams, ss.schemeName, ss.schemeStartDate FROM cardissue cc join startscheme ss on cc.start_schemeId=ss.start_schemeId where cc.status='Active' and ss.schemeStartDate <= str_to_date($P{tillDate},'%d/%m/%Y');]]>
+	</queryString>
+	<field name="noOfMonths" class="java.lang.Long"/>
+	<field name="dueInstallment" class="java.lang.Long"/>
+	<field name="schemeDuration" class="java.lang.Integer"/>
+	<field name="installment" class="java.lang.Integer"/>
+	<field name="cardNo" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="schemeType" class="java.lang.String"/>
+	<field name="schemeInAmount" class="java.math.BigDecimal"/>
+	<field name="SchemeInGrams" class="java.math.BigDecimal"/>
+	<field name="schemeName" class="java.lang.String"/>
+	<field name="schemeStartDate" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<textField pattern="d/M/yyyy" isBlankWhenNull="false">
+				<reportElement x="94" y="10" width="352" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{cardNo}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Payment Dues from Customer as on : "+$P{tillDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="8" width="42" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Card No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="8" width="100" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="2" width="57" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Due No Of]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="2" width="57" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scheme ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="15" width="57" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Duration]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="31" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="144" y="8" width="79" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scheme Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="2" width="51" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scheme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="15" width="51" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="15" width="57" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Start Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="2" width="57" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scheme ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="15" width="58" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Installment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="15" width="57" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Installment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="2" width="58" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paid No Of]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="2" width="47" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Scheme]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="15" width="47" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{SchemeInGrams}!=0.000]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grams]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="15" width="47" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{schemeInAmount}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="1" width="100" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="1" width="42" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cardNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="435" y="1" width="58" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{installment}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="493" y="1" width="57" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dueInstallment}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement x="321" y="1" width="57" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{schemeStartDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="378" y="1" width="57" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{schemeDuration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="1" width="79" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{schemeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="1" width="51" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{schemeType}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="274" y="1" width="47" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{SchemeInGrams}!=0.000 && $F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SchemeInGrams}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="274" y="1" width="47" height="13" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{schemeType}=="Amount" && $F{dueInstallment}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{schemeInAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28">
+			<textField evaluationTime="Report" isBlankWhenNull="true">
+				<reportElement x="435" y="13" width="73" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Page No : "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="43">
+			<staticText>
+				<reportElement x="94" y="23" width="321" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[ ! No Data Found for the given "Scheme Name" and "Up-to-Date"]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

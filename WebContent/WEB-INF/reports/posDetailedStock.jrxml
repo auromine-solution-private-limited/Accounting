@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="posCatStock" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" isSummaryWithPageHeaderAndFooter="true" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM postagitem WHERE qtyset != 0;]]>
+	</queryString>
+	<field name="tagId" class="java.lang.Integer"/>
+	<field name="categoryName" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="companyName" class="java.lang.String"/>
+	<field name="vatPercentage" class="java.math.BigDecimal"/>
+	<field name="transactionId" class="java.lang.String"/>
+	<field name="discountPercentage" class="java.math.BigDecimal"/>
+	<field name="printName" class="java.lang.String"/>
+	<field name="costRate" class="java.math.BigDecimal"/>
+	<field name="salesRate" class="java.math.BigDecimal"/>
+	<field name="barcodeId" class="java.lang.String"/>
+	<field name="transactionType" class="java.lang.String"/>
+	<field name="mrpinRs" class="java.math.BigDecimal"/>
+	<field name="qtyset" class="java.lang.Integer"/>
+	<field name="pps" class="java.lang.Integer"/>
+	<field name="totalpieces" class="java.lang.Integer"/>
+	<field name="POSReferenceID" class="java.lang.String"/>
+	<field name="deleted" class="java.lang.String"/>
+	<field name="date" class="java.sql.Timestamp"/>
+	<field name="margin" class="java.math.BigDecimal"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="itemId" class="java.lang.Integer"/>
+	<variable name="CategoryTotalQtySet" class="java.lang.Integer" resetType="Group" resetGroup="Category" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtyset}]]></variableExpression>
+	</variable>
+	<variable name="categoryTotalPieces" class="java.lang.Integer" resetType="Group" resetGroup="Category" calculation="Sum">
+		<variableExpression><![CDATA[$F{pps}]]></variableExpression>
+	</variable>
+	<variable name="TotalPieces" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{pps}]]></variableExpression>
+	</variable>
+	<variable name="TotalQtySet" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtyset}]]></variableExpression>
+	</variable>
+	<group name="Category">
+		<groupExpression><![CDATA[$F{categoryName}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="4" y="1" width="117" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoryName}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Dashed"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField isBlankWhenNull="true">
+					<reportElement x="410" y="3" width="57" height="17" isRemoveLineWhenBlank="true"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CategoryTotalQtySet}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="43" y="3" width="166" height="17" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoryName}+" Total Pieces : "]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="241" y="3" width="169" height="17" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoryName}+" Total QtySet : "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="209" y="3" width="31" height="17"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{categoryTotalPieces}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="74" y="9" width="281" height="29"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[POS Detailed Stock Report generated on ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="51" width="555" height="1"/>
+			</line>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement x="357" y="9" width="136" height="29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="17" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="290" y="0" width="61" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pieces]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="0" width="67" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="40" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[M.R.P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="0" width="52" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Barcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="8" y="0" width="95" height="17" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Category Name ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="0" width="120" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Item Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="162" y="2" width="127" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="296" y="2" width="55" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalpieces}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="369" y="2" width="67" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{transactionType}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="442" y="2" width="69" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mrpinRs}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="107" y="2" width="52" height="13" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{barcodeId}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="31" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="285" y="6" width="55" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalPieces}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="498" y="7" width="57" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{TotalQtySet}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="185" y="6" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pieces : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="7" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total QtySet : ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="21" y="10" width="470" height="40" forecolor="#FF0033"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="24"/>
+				</textElement>
+				<text><![CDATA[The selection returned as empty]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="POSSalesRegister" language="groovy" pageWidth="700" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="posfrmdate" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="postodate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from possales where salesdate >=str_to_date($P{posfrmdate},'%d/%m/%Y') and salesdate<=str_to_date($P{postodate},'%d/%m/%Y')AND
+salesType='Estimate POS Sales']]>
+	</queryString>
+	<field name="posSalesId" class="java.lang.Integer"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="salesmanName" class="java.lang.String"/>
+	<field name="netAmount" class="java.math.BigDecimal"/>
+	<field name="totalAmount" class="java.math.BigDecimal"/>
+	<field name="billNo" class="java.lang.String"/>
+	<field name="printInvoice" class="java.lang.Boolean"/>
+	<field name="salesType" class="java.lang.String"/>
+	<field name="roundOff" class="java.math.BigDecimal"/>
+	<field name="cashAmount" class="java.math.BigDecimal"/>
+	<field name="chequeBank" class="java.lang.String"/>
+	<field name="chequeDetails" class="java.lang.String"/>
+	<field name="chequeAmount" class="java.math.BigDecimal"/>
+	<field name="cardBank" class="java.lang.String"/>
+	<field name="cardDetails" class="java.lang.String"/>
+	<field name="cardAmount" class="java.math.BigDecimal"/>
+	<field name="voucherList" class="java.lang.String"/>
+	<field name="voucherDetails" class="java.lang.String"/>
+	<field name="voucherAmount" class="java.math.BigDecimal"/>
+	<field name="receiptType" class="java.lang.String"/>
+	<field name="walkinAddress" class="java.lang.String"/>
+	<field name="subTotal" class="java.math.BigDecimal"/>
+	<field name="transactionNo" class="java.lang.Integer"/>
+	<field name="referencePosno" class="java.lang.Integer"/>
+	<field name="walkinCustomer" class="java.lang.String"/>
+	<field name="taxinAmount" class="java.math.BigDecimal"/>
+	<field name="cheque" class="java.lang.String"/>
+	<field name="giftVoucher" class="java.lang.String"/>
+	<field name="returnreason" class="java.lang.String"/>
+	<field name="cash" class="java.lang.String"/>
+	<field name="salesdate" class="java.sql.Timestamp"/>
+	<field name="card" class="java.lang.String"/>
+	<field name="counterCash" class="java.math.BigDecimal"/>
+	<field name="totalAmountReceived" class="java.math.BigDecimal"/>
+	<field name="balanceToCustomer" class="java.math.BigDecimal"/>
+	<field name="billposType" class="java.lang.String"/>
+	<variable name="tax_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{taxinAmount}]]></variableExpression>
+	</variable>
+	<variable name="total_amount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{netAmount}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupFooter>
+			<band height="26">
+				<staticText>
+					<reportElement mode="Opaque" x="390" y="2" width="49" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total ]]></text>
+				</staticText>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="449" y="4" width="81" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{tax_1}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="-1" width="660" height="1"/>
+				</line>
+				<line>
+					<reportElement x="0" y="25" width="660" height="1"/>
+				</line>
+				<textField>
+					<reportElement x="547" y="4" width="98" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{total_amount}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="31">
+			<staticText>
+				<reportElement x="250" y="0" width="145" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[POS Sales Register]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25">
+			<staticText>
+				<reportElement mode="Opaque" x="7" y="5" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="216" y="5" width="27" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="54" y="5" width="85" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{posfrmdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="5" width="97" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{postodate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<staticText>
+				<reportElement mode="Opaque" x="7" y="0" width="76" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="96" y="0" width="76" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="228" y="-1" width="179" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="547" y="-1" width="98" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="449" y="-1" width="81" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vat Amount]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="21" width="660" height="1" forecolor="#666666"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26">
+			<textField>
+				<reportElement x="7" y="3" width="76" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{billNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="3" width="179" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="3" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{taxinAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="547" y="3" width="98" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{netAmount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="96" y="3" width="77" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{salesdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24">
+			<textField>
+				<reportElement mode="Opaque" x="445" y="9" width="170" height="13" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="615" y="10" width="45" height="13" backcolor="#FFFFFF"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="58" y="6" width="541" height="37" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()==0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your selection has returned no results.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

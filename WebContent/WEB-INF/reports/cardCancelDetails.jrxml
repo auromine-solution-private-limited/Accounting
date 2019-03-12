@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cardwiseschemeDetails" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="schemeName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT saving_schemereceipt.customername,saving_schemereceipt.receiptno,saving_schemereceipt.cardno,saving_schemereceipt.receiptdate,saving_schemereceipt.creditaccount,saving_schemereceipt.paymentamount,saving_schemereceipt.narration,cardissue.status,cardissue.installment,startscheme.schemetype,startscheme.schemeinamount,startscheme.schemeingrams  FROM cardissue   INNER JOIN
+                      startscheme ON cardissue.start_schemeId = startscheme.start_schemeId inner join
+ saving_schemereceipt on cardissue.cardno=saving_schemereceipt.cardno where cardissue.status='Cancelled' AND cardissue.start_schemeid=(SELECT start_schemeid FROM startscheme where schemename=$P{schemeName});]]>
+	</queryString>
+	<field name="customername" class="java.lang.String"/>
+	<field name="receiptno" class="java.lang.String"/>
+	<field name="cardno" class="java.lang.String"/>
+	<field name="receiptdate" class="java.sql.Timestamp"/>
+	<field name="creditaccount" class="java.lang.String"/>
+	<field name="paymentamount" class="java.math.BigDecimal"/>
+	<field name="narration" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="installment" class="java.lang.Integer"/>
+	<field name="schemetype" class="java.lang.String"/>
+	<field name="schemeinamount" class="java.math.BigDecimal"/>
+	<field name="schemeingrams" class="java.math.BigDecimal"/>
+	<variable name="totpayamt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{paymentamount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="151" y="6" width="254" height="20"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cancel Card Details Register]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="27" width="552" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="14" width="552" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="6" y="0" width="145" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Scheme Name : "+$P{schemeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="0" width="130" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Scheme Type : "+$F{schemetype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="478" y="0" width="73" height="14">
+					<printWhenExpression><![CDATA[$F{schemeinamount}!=0.00]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{schemeinamount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="376" y="1" width="102" height="14"/>
+				<textElement/>
+				<text><![CDATA[Scheme In Amount :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="1" width="120" height="13">
+					<printWhenExpression><![CDATA[$F{schemeingrams}!=0.000]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA["SchemeInGm : "+$F{schemeingrams}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="17" width="552" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="3" width="29" height="11" forecolor="#000000"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="53" y="3" width="69" height="11" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Payment No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="125" y="3" width="80" height="11" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CustomerName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="211" y="3" width="52" height="11" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CardNo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="289" y="3" width="20" height="11" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="323" y="3" width="77" height="11" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Credit Account]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="3" width="50" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Narration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="2" width="70" height="11" forecolor="#000000"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Payment Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField pattern="dd/MM/yy">
+				<reportElement x="3" y="0" width="48" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{receiptdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="122" y="0" width="83" height="17"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{customername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="1" width="58" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cardno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="1" width="51" height="17">
+					<printWhenExpression><![CDATA[$F{creditaccount}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{creditaccount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="1" width="62" height="17"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{paymentamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="483" y="1" width="61" height="18"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{narration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="289" y="1" width="20" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{installment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="1" width="71" height="18"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{receiptno}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15">
+			<staticText>
+				<reportElement x="329" y="0" width="76" height="15"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="416" y="0" width="68" height="15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{totpayamt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="151" y="22" width="308" height="20"/>
+				<textElement/>
+				<text><![CDATA[No Data Found For The Given Scheme name and Date...]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

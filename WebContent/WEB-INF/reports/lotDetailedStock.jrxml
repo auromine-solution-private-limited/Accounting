@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="categorylist" language="groovy" pageWidth="591" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="551" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" isSummaryWithPageHeaderAndFooter="true" isIgnorePagination="true">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.background.image" value="C:\Documents and Settings\Ams\Desktop\logo.png"/>
+	<property name="ireport.background.image.properties" value="true,true,0.25,-8,-8,0,0,178,124"/>
+	<parameter name="metalUsed" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT jeweltype.jewelName,jeweltype.totalGrossWeight As t1,
+category.categoryName,category.totalGrossWeight AS t2 ,itemmaster.itemName,itemmaster.metalType,itemmaster.itemCode,itemmaster.qty,itemmaster.totalPieces,itemmaster.totalGrossWeight
+AS t3 FROM jeweltype
+LEFT OUTER JOIN category ON jeweltype.jewelName = category.basecategory
+LEFT OUTER JOIN itemmaster ON category.categoryName = itemmaster.subCategoryName WHERE jeweltypeid>10 AND jeweltype.metalUsed=$P{metalUsed} AND qty!=0 and (stocktype='SilverLotStock' OR stocktype='GoldLotStock') ORDER BY category.categoryName;]]>
+	</queryString>
+	<field name="jewelName" class="java.lang.String"/>
+	<field name="t1" class="java.math.BigDecimal"/>
+	<field name="categoryName" class="java.lang.String"/>
+	<field name="t2" class="java.math.BigDecimal"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="metalType" class="java.lang.String"/>
+	<field name="itemCode" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Integer"/>
+	<field name="totalPieces" class="java.lang.Integer"/>
+	<field name="t3" class="java.math.BigDecimal"/>
+	<variable name="t3_2" class="java.lang.Float" resetType="Group" resetGroup="categoryName" calculation="Sum">
+		<variableExpression><![CDATA[$F{t3}]]></variableExpression>
+	</variable>
+	<variable name="t2_1" class="java.lang.Float" resetType="Group" resetGroup="jewelName" calculation="Sum">
+		<variableExpression><![CDATA[$F{t2}]]></variableExpression>
+	</variable>
+	<variable name="t3_1" class="java.lang.Float" resetType="Group" resetGroup="categoryName" calculation="Sum">
+		<variableExpression><![CDATA[$F{t3}]]></variableExpression>
+	</variable>
+	<variable name="t3_3" class="java.lang.Float" resetType="Group" resetGroup="jewelName" calculation="Sum">
+		<variableExpression><![CDATA[$F{t3}]]></variableExpression>
+	</variable>
+	<variable name="totqty" class="java.lang.Integer" resetType="Group" resetGroup="categoryName" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="jewelName_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{jewelName}]]></variableExpression>
+	</variable>
+	<variable name="categoryName_1" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{categoryName}]]></variableExpression>
+	</variable>
+	<variable name="totqtysum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="t3_4" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{t3}]]></variableExpression>
+	</variable>
+	<variable name="t1_2" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{t1}]]></variableExpression>
+	</variable>
+	<variable name="t1_3" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{t1}]]></variableExpression>
+	</variable>
+	<variable name="numberOfPieces_1" class="java.lang.Integer" resetType="Group" resetGroup="categoryName" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalPieces}]]></variableExpression>
+	</variable>
+	<variable name="qtysum" class="java.lang.Integer" resetType="Group" resetGroup="jewelName" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<variable name="sumofpeices" class="java.lang.Integer" resetType="Group" resetGroup="jewelName" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalPieces}]]></variableExpression>
+	</variable>
+	<group name="jewelName" keepTogether="true">
+		<groupExpression><![CDATA[$F{jewelName}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="1" y="1" width="138" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jewelName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="498" y="1" width="53" height="13" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{metalType}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="jewelName" pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="215" y="1" width="45" height="13"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{t3_3}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="15" width="551" height="1" forecolor="#666666"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement x="1" y="0" width="481" height="13" forecolor="#003399" backcolor="#00CCCC"/>
+					<textElement>
+						<font fontName="Times New Roman" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jewelName}+": "+"Total qty/set"+"="+$V{qtysum}+", "+"Total pieces"+"="+$V{sumofpeices}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="13" width="551" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="categoryName" keepTogether="true">
+		<groupExpression><![CDATA[$F{categoryName}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<textField isBlankWhenNull="true">
+					<reportElement x="80" y="0" width="119" height="13" forecolor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoryName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="307" y="1" width="56" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ItemName]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="categoryName" pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="217" y="1" width="41" height="13"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{t3_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="490" y="1" width="61" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tot GrossWt]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="438" y="1" width="48" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Barcode]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="394" y="1" width="44" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pieces]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2" y="1" width="73" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="10" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Sub-Category:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="13" width="551" height="1" forecolor="#666666"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="498" y="0" width="53" height="13"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{t3_2}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="-1" width="551" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="14" width="551" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="2" y="1" width="77" height="13" backcolor="#9999FF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[TOTAL SET/QTY ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="433" y="1" width="57" height="13"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[SubTotal ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="307" y="1" width="73" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[TOTAL PIECES]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="79" y="0" width="100" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totqty}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="393" y="0" width="34" height="13"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{numberOfPieces_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="74">
+			<frame>
+				<reportElement mode="Opaque" x="3" y="2" width="548" height="70" backcolor="#FFFFFF"/>
+				<staticText>
+					<reportElement x="176" y="12" width="220" height="43" forecolor="#000000"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="24" isBold="true" pdfFontName="Times-Roman"/>
+					</textElement>
+					<text><![CDATA[Detailed Stock Report]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16">
+			<line>
+				<reportElement x="0" y="15" width="551" height="1" forecolor="#666666"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="3" y="1" width="73" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="463" y="0" width="88" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BullionType]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="200" y="1" width="89" height="13" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Gross Wt ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14">
+			<elementGroup>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="77" y="0" width="285" height="12" isRemoveLineWhenBlank="true">
+						<property name="net.sf.jasperreports.export.pdf.tag.table" value="start"/>
+					</reportElement>
+					<box>
+						<pen lineColor="#CCCCCC"/>
+						<topPen lineColor="#CCCCCC"/>
+						<leftPen lineColor="#CCCCCC"/>
+						<bottomPen lineColor="#CCCCCC"/>
+						<rightPen lineColor="#CCCCCC"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="498" y="0" width="53" height="12" isRemoveLineWhenBlank="true" backcolor="#330000"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="433" y="0" width="55" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{itemCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="393" y="0" width="35" height="12" isRemoveLineWhenBlank="true" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalPieces}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="62">
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="31" width="61" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{jewelName_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="193" y="32" width="62" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{categoryName_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="412" y="29" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{t3_4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="312" y="30" width="54" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totqtysum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="64" y="9" width="427" height="1"/>
+			</line>
+			<line>
+				<reportElement x="64" y="59" width="427" height="1"/>
+			</line>
+			<line>
+				<reportElement x="491" y="9" width="1" height="50"/>
+			</line>
+			<line>
+				<reportElement x="64" y="9" width="1" height="50"/>
+			</line>
+			<line>
+				<reportElement x="64" y="21" width="427" height="1"/>
+			</line>
+			<line>
+				<reportElement x="396" y="9" width="1" height="50"/>
+			</line>
+			<line>
+				<reportElement x="167" y="9" width="1" height="50"/>
+			</line>
+			<line>
+				<reportElement x="286" y="10" width="1" height="50"/>
+			</line>
+			<staticText>
+				<reportElement x="65" y="8" width="100" height="14" forecolor="#000099"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total No of Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="10" width="118" height="12" forecolor="#000099"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total No of Subcategory ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="9" width="109" height="12" forecolor="#000099"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Items (QTY/SET)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="10" width="94" height="12" forecolor="#000099"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Gross Weight]]></text>
+			</staticText>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="57" y="9" width="470" height="35" forecolor="#FF0033"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[The selection returned as empty]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
