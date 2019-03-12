@@ -19,13 +19,11 @@ public class HibernateAccountsDaoImpl extends HibernateDaoSupport implements Acc
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly=true)
 	public List<Accounts> listAccounts(){
-	//	System.out.println("Executing Accounts Query:::::::::::::::::::::::::::::::::::::::::::::::");
 		return (List<Accounts>)getHibernateTemplate().findByNamedQuery(LIST_BY_ACCT_NAME);
 	}
 
 	@Transactional
 	public Accounts getAccounts(Integer id){	
-		//System.out.println("Method getAccounts by Id:::::::::::::::::::::::::::::::::::::::::::::::::::::");
 
 		if(getHibernateTemplate()!=null){
 			return (Accounts)getHibernateTemplate().get(Accounts.class, id);
@@ -38,7 +36,7 @@ public class HibernateAccountsDaoImpl extends HibernateDaoSupport implements Acc
 
 	@Transactional(readOnly=true)
 	public Accounts getAccounts(String account){
-	//	System.out.println("Method getAccounts by String::::::::::::::::::::::::::::::::::::::::::::::::");
+	
 		Session session = getSession();
 		try{
 			Query query = session.getNamedQuery(LIST_BY_ACCT_NAME);
@@ -80,20 +78,17 @@ public class HibernateAccountsDaoImpl extends HibernateDaoSupport implements Acc
 	
 	@Transactional
 	public void insertAccounts(Accounts account){
-	System.out.println("Accounts: Executing insert method ::::::::::::");
 		getHibernateTemplate().saveOrUpdate(account);		
 	}
 
 	@Transactional
 	public void updateAccounts(Accounts account) {
-	System.out.println("Accounts: Executing update method ::::::::::::");
 		getHibernateTemplate().update(account);
     }
 
 	@Transactional
     public void deleteAccounts(Accounts account) {
-		System.out.println("Accounts: Executing delete method ::::::::::::");
-      getHibernateTemplate().delete(account);
+		getHibernateTemplate().delete(account);
     }
 
 	@SuppressWarnings("unchecked")
@@ -104,8 +99,7 @@ public class HibernateAccountsDaoImpl extends HibernateDaoSupport implements Acc
 	}	
 	
 	@SuppressWarnings("unchecked")
-	public List<Accounts> getAccountId(String accountGroupName) {
-		
+	public List<Accounts> getAccountId(String accountGroupName) {		
 		List<Accounts> accountId=getHibernateTemplate().find("FROM Accounts WHERE accountGroup = ?",accountGroupName);
 		return accountId;
 	}	
