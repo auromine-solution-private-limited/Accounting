@@ -25,8 +25,7 @@ response.sendRedirect("login.htm"); // GO TO LOGIN PAGE
 			<th>Metal Group Name</th>
 			<th></th>
 			<th>Base Metal Used</th>
-		<!--<th>Category Type</th>-->	
-			<th>Opening Gross Wt.</th>		
+					<th>Opening Gross Wt.</th>		
 	</thead>					
 	<c:forEach var="category" items="${categoryList}">
 	<c:if test='${category.categoryType == "Master"}'>
@@ -35,7 +34,6 @@ response.sendRedirect("login.htm"); // GO TO LOGIN PAGE
 		<td>${category.categoryName}</td>
 		<td></td>
 		<td>${category.metalUsed}</td>
-		<!--<td>${category.categoryType}</td>-->
 		<td>${category.totalGrossWeight}</td>
 
 	</tr>
